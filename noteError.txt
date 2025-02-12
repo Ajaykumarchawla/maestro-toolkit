@@ -1,0 +1,5 @@
+ [end of output]                                                                                                                             
+ => => #   note: This error originates from a subprocess, and is likely not a problem with pip.                                                            
+ => => #   ERROR: Failed building wheel for gensim                                                                                                         
+ => => #   Running setup.py clean for gensim                                                                                                               
+ => => #   Building wheel for issue_db_api (pyproject.toml): started

@@ -1,0 +1,34 @@
+ASF GitHub Bot
+Hive QA
+cnsgithub
+TrafficServer Bot
+Mail Delivery Subsystem
+ASF subversion and git services
+Hadoop QA
+QABot from busbey
+Thomas Smets - A3 SYSTEM
+ATLAS QA
+m
+Flink Jira Bot
+ASF IRC Bot
+Beam JIRA Bot
+tester
+Mahout QA
+Laurent Chabot
+TezQA
+FAURE SYSTEMS
+SentryQA
+Bug Reporter
+Chris Chabot
+Ignite TC Bot
+asapsystems
+rangerqa
+Flume QA
+Knox QA
+Giraph QA
+Jerry Chabot
+Sqoop QA bot
+apache@tingo.org
+GitHub Import
+Tajo QA
+Hudson

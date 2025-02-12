@@ -1,0 +1,155 @@
+{
+    "total_pairs": 1608,
+    "analytics": [
+        {
+            "combination": "executive-existence-non_property--executive-non_existence-non_property",
+            "count": 2,
+            "percentage": 0.12437810945273632
+        },
+        {
+            "combination": "executive-existence-non_property--executive-non_existence-property",
+            "count": 1,
+            "percentage": 0.06218905472636816
+        },
+        {
+            "combination": "executive-existence-non_property--non_executive-existence-non_property",
+            "count": 2,
+            "percentage": 0.12437810945273632
+        },
+        {
+            "combination": "executive-existence-non_property--non_executive-non_existence-non_property",
+            "count": 49,
+            "percentage": 3.0472636815920398
+        },
+        {
+            "combination": "executive-existence-property--non_executive-non_existence-non_property",
+            "count": 2,
+            "percentage": 0.12437810945273632
+        },
+        {
+            "combination": "executive-non_existence-non_property--executive-non_existence-non_property",
+            "count": 2,
+            "percentage": 0.12437810945273632
+        },
+        {
+            "combination": "executive-non_existence-non_property--non_executive-existence-non_property",
+            "count": 1,
+            "percentage": 0.06218905472636816
+        },
+        {
+            "combination": "executive-non_existence-non_property--non_executive-non_existence-non_property",
+            "count": 116,
+            "percentage": 7.213930348258707
+        },
+        {
+            "combination": "executive-non_existence-property--executive-non_existence-non_property",
+            "count": 1,
+            "percentage": 0.06218905472636816
+        },
+        {
+            "combination": "executive-non_existence-property--non_executive-existence-non_property",
+            "count": 2,
+            "percentage": 0.12437810945273632
+        },
+        {
+            "combination": "executive-non_existence-property--non_executive-non_existence-non_property",
+            "count": 25,
+            "percentage": 1.554726368159204
+        },
+        {
+            "combination": "non_executive-existence-non_property--executive-non_existence-non_property",
+            "count": 1,
+            "percentage": 0.06218905472636816
+        },
+        {
+            "combination": "non_executive-existence-non_property--non_executive-existence-non_property",
+            "count": 85,
+            "percentage": 5.286069651741294
+        },
+        {
+            "combination": "non_executive-existence-non_property--non_executive-existence-property",
+            "count": 10,
+            "percentage": 0.6218905472636816
+        },
+        {
+            "combination": "non_executive-existence-non_property--non_executive-non_existence-non_property",
+            "count": 410,
+            "percentage": 25.497512437810943
+        },
+        {
+            "combination": "non_executive-existence-non_property--non_executive-non_existence-property",
+            "count": 6,
+            "percentage": 0.3731343283582089
+        },
+        {
+            "combination": "non_executive-existence-property--executive-non_existence-non_property",
+            "count": 1,
+            "percentage": 0.06218905472636816
+        },
+        {
+            "combination": "non_executive-existence-property--non_executive-existence-non_property",
+            "count": 25,
+            "percentage": 1.554726368159204
+        },
+        {
+            "combination": "non_executive-existence-property--non_executive-existence-property",
+            "count": 2,
+            "percentage": 0.12437810945273632
+        },
+        {
+            "combination": "non_executive-existence-property--non_executive-non_existence-non_property",
+            "count": 207,
+            "percentage": 12.87313432835821
+        },
+        {
+            "combination": "non_executive-existence-property--non_executive-non_existence-property",
+            "count": 2,
+            "percentage": 0.12437810945273632
+        },
+        {
+            "combination": "non_executive-non_existence-non_property--executive-non_existence-non_property",
+            "count": 1,
+            "percentage": 0.06218905472636816
+        },
+        {
+            "combination": "non_executive-non_existence-non_property--non_executive-existence-non_property",
+            "count": 17,
+            "percentage": 1.0572139303482588
+        },
+        {
+            "combination": "non_executive-non_existence-non_property--non_executive-existence-property",
+            "count": 3,
+            "percentage": 0.18656716417910446
+        },
+        {
+            "combination": "non_executive-non_existence-non_property--non_executive-non_existence-non_property",
+            "count": 405,
+            "percentage": 25.186567164179102
+        },
+        {
+            "combination": "non_executive-non_existence-non_property--non_executive-non_existence-property",
+            "count": 4,
+            "percentage": 0.24875621890547264
+        },
+        {
+            "combination": "non_executive-non_existence-property--non_executive-existence-non_property",
+            "count": 24,
+            "percentage": 1.4925373134328357
+        },
+        {
+            "combination": "non_executive-non_existence-property--non_executive-existence-property",
+            "count": 2,
+            "percentage": 0.12437810945273632
+        },
+        {
+            "combination": "non_executive-non_existence-property--non_executive-non_existence-non_property",
+            "count": 195,
+            "percentage": 12.126865671641792
+        },
+        {
+            "combination": "non_executive-non_existence-property--non_executive-non_existence-property",
+            "count": 5,
+            "percentage": 0.3109452736318408
+        }
+    ]
+}

@@ -1,0 +1,76 @@
+{
+    "analytics": [
+        {
+            "combination": "executive-existence-non_property",
+            "executive_count": 3,
+            "existence_count": 2,
+            "property_count": 1,
+            "non_architectural_count": 49,
+            "total_issues": 8,
+            "total_comments": 54
+        },
+        {
+            "combination": "executive-existence-property",
+            "executive_count": 0,
+            "existence_count": 0,
+            "property_count": 0,
+            "non_architectural_count": 2,
+            "total_issues": 1,
+            "total_comments": 2
+        },
+        {
+            "combination": "executive-non_existence-non_property",
+            "executive_count": 2,
+            "existence_count": 1,
+            "property_count": 0,
+            "non_architectural_count": 116,
+            "total_issues": 42,
+            "total_comments": 119
+        },
+        {
+            "combination": "executive-non_existence-property",
+            "executive_count": 1,
+            "existence_count": 2,
+            "property_count": 0,
+            "non_architectural_count": 25,
+            "total_issues": 6,
+            "total_comments": 28
+        },
+        {
+            "combination": "non_executive-existence-non_property",
+            "executive_count": 1,
+            "existence_count": 95,
+            "property_count": 16,
+            "non_architectural_count": 410,
+            "total_issues": 73,
+            "total_comments": 512
+        },
+        {
+            "combination": "non_executive-existence-property",
+            "executive_count": 1,
+            "existence_count": 27,
+            "property_count": 4,
+            "non_architectural_count": 207,
+            "total_issues": 30,
+            "total_comments": 237
+        },
+        {
+            "combination": "non_executive-non_existence-non_property",
+            "executive_count": 1,
+            "existence_count": 20,
+            "property_count": 7,
+            "non_architectural_count": 405,
+            "total_issues": 220,
+            "total_comments": 430
+        },
+        {
+            "combination": "non_executive-non_existence-property",
+            "executive_count": 0,
+            "existence_count": 26,
+            "property_count": 7,
+            "non_architectural_count": 195,
+            "total_issues": 24,
+            "total_comments": 226
+        }
+    ]
+}

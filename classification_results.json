@@ -1,0 +1,2039 @@
+[
+    {
+        "author_display_name": "David Smiley",
+        "comment": "bq.  Probably this feature may fit well Curator framework.\r\n\r\nI recall it's already there but why should only Curator users get all the fun?  Perhaps the projects should merge :-)  I'm not saying that just because of this issue but its my overall impression, and your response just reinforces the idea.\r\n\r\nbq. Adding compression means to support some set of algorithms that will become obsolete one day and to add more dependencies to the users.\r\n\r\nOptional dependencies.  Opt-in.  gzip has been around forever and is included in Java.\r\n\r\nbq. I am not sure I get the value of this feature.\r\n\r\nSmaller files to transfer back 'n forth, less memory in ZK heap.\r\n\r\nbq. Do you mean that the value stored in ZK should have some header that describes the compression algorithm and the reader detects automatically the compression algorithm used by the writer?\r\n\r\nYes.",
+        "classification_result": {
+            "property": {
+                "confidence": 0.013511667028069496,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.004402622580528259,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.5281776189804077,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Mate Szalay-Beko",
+        "comment": "Hi [~ztzg],\r\n\r\nI like the idea. Although usually we don't recommend to use the SuperUser feature in production for our customers (it is more secure to properly set ACLs for users). Although I can see the need of having multiple admin users who is capable to connect to the cluster with super user rights to fix the cluster if needed. And if someone needs this, then it is still better to be able to separate/manage these admin accounts by using multiple principals.\r\n\r\nI would go with the \"overloading\u00a0{{zookeeper.superUser}}, parsing it as a comma-separated list\", as it seems to be as a simple and backward-compatible solution. But I don't have strong opinion against the other approaches too.",
+        "classification_result": {
+            "property": {
+                "confidence": 0.16981911659240723,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.003933837171643972,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.7124340534210205,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Andre Price",
+        "comment": "I'd imagine kubernetes solutions use containers too.\r\n\r\nFor what it is worth this also seems to reproduce easily with the docker compose stack.yml file here (using Docker for Mac anyway):\u00a0[https://hub.docker.com/_/zookeeper]\u00a0\r\n * Start up the stack\r\n{code:java}\r\ndocker-compose -f stack.yml up{code}\r\n\r\n * Verify you can interact with ZK e.g.:\r\n\r\n{code:java}\r\n zkCli.sh -server\u00a0host.docker.internal:2181 ls /zookeeper {code}\r\n * Determine current leader e.g.:\r\n\r\n{noformat}\r\nfor i in $(seq 1 3); do echo srvr | nc localhost 218$i; done{noformat}\r\n * Restart the leader e.g.\r\n{noformat}\r\n docker restart\u00a0zktest_zoo3_1 (container names will depend on directory stack started in){noformat}\r\n\r\n * Try to interact with ZK ({color:#ff0000}\u00a0Fails for me{color}) e.g.\r\n{code:java}\r\nzkCli.sh -server\u00a0host.docker.internal:2181 ls /zookeeper`{code}",
+        "classification_result": {
+            "property": {
+                "confidence": 0.24956142902374268,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.02009715512394905,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.6882939338684082,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Chevaris",
+        "comment": "Hi Enrico,\r\n\r\nI do not see any proper manner to fix the reported bug in Zookeeper.\r\n\r\nI see 2 different problems to fix here:\r\n\r\n1.- Zookeeper does not\u00a0 provide a clear API/user guide about how to embed zookeeper in a java process (In this case how to stop is not clear). As of today looks to me that every project that is embedding Zookeeper is trying their best. I do not think your proposal to remove shutdown calls from cnxCtx is solving the problem reported here. Maybe there should a different ticket to provide a clear API to make ZK embeddable component, and the proper solution is discussed there. The solution could be a new API to provide better documentation about how do it. I do not know what is best.\r\n\r\n2.- It is clear that Curator is using the wrong calls for closing the ZK server as of today, so that needs a fix on Curator's code. I do not see a different manner. It is true that while first problem is not solved, nobody will assure that embedding zookeeper will be future proof\r\n\r\n\u00a0",
+        "classification_result": {
+            "property": {
+                "confidence": 0.03288089483976364,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.003441894892603159,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.6159037947654724,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Zhewei Hu",
+        "comment": "For a ZooKeeper ensemble with N servers, if N is odd, the ensemble is able to tolerate up to N/2 server failures without losing any znode data; if N is even, the ensemble is able to tolerate up to N/2-1 server failures.\r\n\r\nFor example, if we have a ZooKeeper ensemble with 5 servers, the ensemble is able to tolerate up to 2 (5/2) server failures. If the ZooKeeper ensemble with 6 servers, the ensemble is also able to tolerate up to 2 (6/2-1) server failures without losing data and prevent the \"brain split\" issue.\r\n\r\nNote, that is the reason that we recommend setting one ZooKeeper ensemble with the odd number of servers. This is because, with the even number of servers, the capacity of failure tolerance is the same (2 for both 5-node ensemble and 6-node ensemble). However, for an ensemble with an even number of servers, it has to maintain extra connections and data transfers for one more server.",
+        "classification_result": {
+            "property": {
+                "confidence": 0.14179056882858276,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.002430690685287118,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.7300174236297607,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Mate Szalay-Beko",
+        "comment": "In ZooKeeper 3.5.x I don't think you can enforce authentication. The basic idea is, that using ACLs you can fine-tune for each ZNode in ZooKeeper that which authenticated users have read / write / etc permissions. So even if some user can login without authentication, he shouldn't be able to see your sensitive data (if you set the ACLs properly).\r\n\r\nHowever, from ZooKeeper 3.6.0 (hopefully released very soon) there will be a new system property named {{zookeeper.sessionRequireClientSASLAuth}}: When it is set to {{true}}, then ZooKeeper server will only accept connections and requests from clients that have authenticated with server via SASL. Clients that are not configured with SASL authentication, or configured with SASL but failed authentication (i.e. with invalid credential) will not be able to establish a session with server. A typed error code (-124) will be delivered in such case, both Java and C client will close the session with server thereafter, without further attempts on retrying to reconnect.\r\n",
+        "classification_result": {
+            "property": {
+                "confidence": 0.03261078894138336,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.011374748311936855,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.7960609793663025,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Mate Szalay-Beko",
+        "comment": "Yes, branch-3.5 will be a bit different, I think I will push a new PR for that branch today (I just wanted to get feedback for the first PR from the community).\r\n\r\n> Wouldn't it be better to not send the address in the first place when it's an \"any\" address?\r\n\r\nThis is an interesting question, I was also thinking about this. However, this would mean we change the protocol and that will cause any rolling upgrade to fail when we have servers running the new code sending \"empty strings\" as addresses to servers running the old code. This would cause the appearance of two partitions during the rolling upgrade, as the old and the new servers will not be able to communicate with each others. Even if only one of these partitions will have the quorum, still it is a thing we want to avoid. \r\n\r\nAlso for the same reason (to support rolling upgrade) we will have to filter the 0.0.0.0 in the receiving side anyway to handle the case when you would rolling upgrade e.g. from 3.5.5 (which still sends 0.0.0.0) to 3.5.8 (that will potentially have this fix). So if we need to filter the 0.0.0.0 on the receiving side, then there is not much added value to touch the sending side. ",
+        "classification_result": {
+            "property": {
+                "confidence": 0.028766389936208725,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.002770250430330634,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.5458061099052429,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Suhas Dantkale",
+        "comment": "Scenario:\r\n1. 5 node ensemble-(SID 1,2,3,4,5). 5 is the current Leader.\r\n2. Test brings down 5's ZK process.\r\n3. Leadership election begins. First each SID votes itself to be the leader as expected.\r\n4. SID 1 and SID 2 gets notification from SID 3 before they get Notification from SID 4. They update their vote to propose 3 as the Leader as expected and send notifications.\r\n5. SID 3 receives the notification from 1, 2 and itself and its Election predicate is successfully terminated and it goes to LEADING state, comes out of FLE and goes to the next phase.\r\n6. SID 2 meantime goes to FOLLOWING state , comes out of FLE and goes to the next phase(NEWLEADER sending etc).\r\n\r\nso far so good.\r\n7. Meantime (somewhere after step 4) SID 1 receives notification from  SID 4 and since SID 4 > SID 3(and zxid is same), SID 1 changes its mind and updates its proposal - now to elect 4 as leader and sends notification.\r\n8. SID 4 is trying to elect itself as leader. And even though SID 2 and SID 3 are out of election, the SID 4 can not get out of election because - not enough number of nodes are following 3(Only 1 is following 3).\r\n9. SID 2 is also stuck in FLE like SID 4.\r\n\r\nSo, in summary SID 1 and 4 are stuck in FLE (in lookForLeader()) and SID 2 and SID 3 are stuck in the next phase because SID 3's NEWLEADER is not responded by the quorum.\r\n",
+        "classification_result": {
+            "property": {
+                "confidence": 0.018878282979130745,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.004970655310899019,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.6429604291915894,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Damien Diederen",
+        "comment": "ZOOKEEPER-2122 added SSL support to the C client and to the {{cli_st}}/{{mt}} tools. It introduced (much-welcome!) GNU-style {{getopt_long}} argument parsing, but did not try to preserve backwards compatibility.\r\n\r\nAn earlier version of [PR #1131|https://github.com/apache/zookeeper/pull/1131] introduced (optional) POSIX-style {{getopt}} argument parsing, and was consequently largely obsoleted by the SSL update. It did, however, support \"old-style\" arguments to avoid breaking workflows.\r\n\r\nThe updaded [PR #1131|https://github.com/apache/zookeeper/pull/1131] salvages that feature while preserving the {{getopt_long}} goodness. It is \"legacy-only\"; adding new positional arguments is not supported\u2014as discussed in this thread: #1131 (review).\r\n\r\nThe latest PR failed to build because one of the Jenkins workers was did not have the \"standard\" OpenSSL configuration: [see discussion on PR#1107|https://github.com/apache/zookeeper/pull/1107#issuecomment-557399890]; This should be fixed by ZOOKEEPER-3630.",
+        "classification_result": {
+            "property": {
+                "confidence": 0.017547544091939926,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.8338118195533752,
+                "prediction": true
+            },
+            "existence": {
+                "confidence": 0.09299740195274353,
+                "prediction": false
+            }
+        },
+        "property": false,
+        "executive": true,
+        "existence": false
+    },
+    {
+        "author_display_name": "Michael Han",
+        "comment": "The design looks good to me.\r\n\r\nI have a patch that supports explicitly specifying client id as a string from user. It does not require auth though, which means a malicious user could impersonate another user thus potentially compromise the quota throttling. Though, in our environment, we think all our clients are trustable and this is not a problem for us. This might be useful for use cases where users don't want to enable auth.\r\n\r\nThis JIRA seems imply that to support client-id, authentication must be enabled. Do we want to enforce this moving forward, or do we also want to support client-id without authentication (for use case in a \"trustable\" environment)? ",
+        "classification_result": {
+            "property": {
+                "confidence": 0.05624422803521156,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.0021347112488001585,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.6588558554649353,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Mocheng Guo",
+        "comment": "The proposed authentication provider will not validate client id from client, instead it will just accept it and save into connection so that all requests from that connection will be associated with its client id. This proposal, just like your patch, does not prevent malicious user impersonating a valid client either, and we have to assume all clients are honest about client id. We have looked at client/server protocol and Ben Reed suggested using auth protocol. Could you explain how your design works to enable client sending id to server?\r\n\r\nAnother option, supposing TLS authentication is enabled and client sending ssl certificate to server, is to take client identity from client ssl certificate as client id. Since ssl certificate is signed by authority, this prevents impersonation attack. We could have system configs to control which id/identity to use for quota control.",
+        "classification_result": {
+            "property": {
+                "confidence": 0.5463287234306335,
+                "prediction": true
+            },
+            "executive": {
+                "confidence": 0.006354005541652441,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.9689792990684509,
+                "prediction": true
+            }
+        },
+        "property": true,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Michael Han",
+        "comment": "My patch alters the client server protocol a little bit by adding client id related information (id string, version, etc) to each packet. Similar to how the protocol was extended for read only servers.\r\n\r\nbq. The proposed authentication provider will not validate client id from client\r\n\r\nI was thinking if authentication was enabled, we can extract the auth related information (e.g. Kerberos principal) and use that for client id. Impersonating clients will not pass authentication. This might not be exactly what you are referring here as the \"proposed authentication provider\", but more like the TLS case you were talking about.\r\n\r\nIn any case, to prevent impersonating, we need have an identity management module that supports login a client (we kind of have it today with SASL / TLS right?), and after client login we can use client identification extracted from the auth info.",
+        "classification_result": {
+            "property": {
+                "confidence": 0.2633434534072876,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.005254241172224283,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.9315547943115234,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Michael Han",
+        "comment": "[~lvfangmin]\u00a0I like this idea. If a transaction does not change the state of the system, we should not let it flow through the consensus part, which is by design not scalable. This is similar to what this Jira is doing, though this Jira scopes the check to local server only.\r\n\r\nI was thinking about what could go wrong if we do this in particular what would happen if LE happen (as error transactions will not be sync on followers anymore). Since error transactions don't change state of the data tree it seems OK of their absence on followers, from a recovery point of view. I'd imagine we just need a conditional processing pipeline for leader, instead of unconditionally send every requests from preprocessor to proposal processor, we only send requests that pass the validation. Is this the \"protocol changes\" you referred to, or there are other cases we need consider here?\r\n\r\n\u00a0",
+        "classification_result": {
+            "property": {
+                "confidence": 0.021924737840890884,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.0031311544589698315,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.6421322822570801,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Michael Han",
+        "comment": "I don't see an obvious gain of using a LSM tree backend just for snapshot and txn log. For zk clients, the read path will be served directly from memory (think zk data tree as a 'memtable' that never flushes); the write path is already sequential for both snapshot and txn log. Reading snapshot and txn log out of LSM tree instead of flat files might reduce recovery time, but I doubt the difference is substantial.\r\n\r\nThat said, having a LSM tree backend and build the zk data tree on top of it will make it possible to store a much larger scale of data set per single node, as we will not store all data in memory only.",
+        "classification_result": {
+            "property": {
+                "confidence": 0.8232102990150452,
+                "prediction": true
+            },
+            "executive": {
+                "confidence": 0.003934343811124563,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.5439953207969666,
+                "prediction": true
+            }
+        },
+        "property": true,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Ling Mao",
+        "comment": "[~belugabehr]\r\nPlz take another look at the my referece provided above.\r\n- 1.There was a good evalutions from Xiang Li, Why the etcd-v3 choose the boltDB:\r\n\u00a0 \u00a0 \u00a0https://github.com/etcd-io/etcd/issues/2646\r\n- 2.Look at this:\r\n\u00a0 \u00a0 \u00a0https://github.com/boltdb/bolt#comparison-with-other-databases\r\n \r\n *LevelDB and its derivatives (RocksDB, HyperLevelDB) are similar to Bolt in that they are libraries bundled into the application, however, their underlying structure is a log-structured merge-tree (LSM tree). An LSM tree optimizes random writes by using a write ahead log and multi-tiered, sorted files called SSTables. Bolt uses a B+tree internally and only a single file. Both approaches have trade-offs.*\r\n *If you require a high random write throughput (>10,000 w/sec) or you need to use spinning disks then LevelDB could be a good choice. If your application is read-heavy or does a lot of range scans then Bolt could be a good choice.*\r\n *One other important consideration is that LevelDB does not have transactions. It supports batch writing of key/values pairs and it supports read snapshots but it will not give you the ability to do a compare-and-swap operation safely. Bolt supports fully serializable ACID transactions.*",
+        "classification_result": {
+            "property": {
+                "confidence": 0.01703818514943123,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.01042869221419096,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.5264445543289185,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "David Mollitor",
+        "comment": "I am a bit confused on the requirement for ACID compliance?  My understanding is that the consistency was a result of the quorum agreement protocol.  Is there some sort of ACID mechanism currently in 3.x?\r\n\r\nbq. If you require a high random write throughput (>10,000 w/sec) _or you need to use spinning disks then_ LevelDB could be a good choice. If your application is read-heavy or does a lot of range scans then Bolt could be a good choice.\r\n\r\nI would go a step further and say that LSM has a *much faster* write than B+tree.  LSM performs a simple append on a write-ahead log file when a record is inserted, for a B+tree, it has to seek around the single file for each insert to ensure that related data is co-located.\r\n\r\nTheoretically, the B+tree has a faster read speed and faster scan speed than LSM.  However, this only when comparing disk reads.  When data is co-located in a single file, scans are faster.  When data is read with LSM, related records may be sprayed across multiple files, requiring many seeks around the disk to load all the records.\r\n\r\nHowever, ZK has a tradition of storing its entire data set in-memory for fast look ups.  If this continues (which I recommend) then data is never being read from disk and the B+tree loses its advantage.",
+        "classification_result": {
+            "property": {
+                "confidence": 0.8790922164916992,
+                "prediction": true
+            },
+            "executive": {
+                "confidence": 0.0176530871540308,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.7164538502693176,
+                "prediction": true
+            }
+        },
+        "property": true,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Fangmin Lv",
+        "comment": "Had an intern\u00a0done some prototype with me by building the ZooKeeper on RocksDB, the intention is\u00a0to store more data, use incremental snapshot to reduce the\u00a0cost with LSM,\u00a0reduce the GC effort and data loading time, etc. It also\u00a0avoids\u00a0fuzzy snapshot which is pretty error-prone and caused lots of consistency bugs in ZK. But it's likely won't give us the same\u00a0throughput\u00a0as what we have now with in memory data tree and append only txn file.\u00a0\r\n\r\nCurrently, we only moved snapshot to RocksDB, the plan is to remove the in memory data tree as well, but only cache\u00a0things like children structure, metadata to retain\u00a0txn prepare and read throughput, etc.\r\n\r\nWe tried to keep the file based txn file, but disable the WAL in RocksDB, since\u00a0we cannot see obvious\u00a0benefit for now.\r\n\r\nThis is still a prototype, and we didn't have time in the last year to spend more effort there, but it will be an interesting try to see how it goes when ZooKeeper meet other backend.\r\n\r\n[~belugabehr]\u00a0what's the status of this project on your side, is it a thought or you already have something?\r\n\r\n\u00a0\r\n\r\n\u00a0",
+        "classification_result": {
+            "property": {
+                "confidence": 0.9210580587387085,
+                "prediction": true
+            },
+            "executive": {
+                "confidence": 0.011648782528936863,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.5305988788604736,
+                "prediction": true
+            }
+        },
+        "property": true,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Brian Nixon",
+        "comment": "I'm assuming that the scenario in mind is a rogue process on your host that is deleting files. One thing to note is that until ZOOKEEPER-3318 is completed to a reasonable state, people may outsource their backups to an external process - in which case the transaction log files and the snapshot files may have their lifecycle controlled by something that is not ZooKeeper (and ZooKeeper should not die when files disappear).\r\n\r\n\u00a0\r\n\r\nHaving a message logged when a .snap or .log file is unexpectedly changed seems reasonable. Could also enable a feature by which the deletion of transaction logs triggers a snapshot to make sure the data tree would survive a sudden restart. I would not kill the server when a transaction log disappears since that would remove your one known copy of the data tree (in memory).\r\n\r\n\u00a0\r\n\r\nTo implement this, you may be able to reuse the FileChangeWatcher that was added for the TLS work or at least copy from its approach.",
+        "classification_result": {
+            "property": {
+                "confidence": 0.07238581776618958,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.001981219043955207,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.6683390736579895,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Michael Han",
+        "comment": "[~nixon] :\r\nbq.  so the Leader is unable to sense the change in Learner status through the status of the network connection\r\n\r\nA plausible theory :)\r\n\r\nThe ping packet between leader and learners is designed to solve this exact problem - to be able to detect liveness of the other side. Basically for each learner, leader will constantly read packets out of the socket associated with the learner in the corresponding LearnerHandler thread. And this read has a timeout configured on the socket on leader side, so even if the sockets on both side are valid, but there is no traffic (such as in this case, where learner leaks sockets by not properly closing them after shutting down), leader's read should eventually time out after sync limit check. Unless:\r\n\r\n* Leader's socket read time out has no effect. So leader will block on reading a socket indefinitely because there is no traffic from learner.\r\n* Learner process, after restarted, somehow ended up with reusing the old Learner socket that's leaked so the corresponding LearnerHandler thread can't detect any difference (which is expected.). I am not sure how possible this case is in practice.\r\n\r\nIn any case, it seems that our Ping mechanism failed to detect the network change in this case.\r\n\r\nbq. the learner queue size keeps growing\r\n\r\nDo you mind elaborate a little bit on which exact queue this is and what caused it growing?\r\n\r\n\r\n\r\n",
+        "classification_result": {
+            "property": {
+                "confidence": 0.04415234178304672,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.005820947233587503,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.8599725961685181,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Michael Han",
+        "comment": "A couple of comments on the high level design:\r\n\r\n* Did we consider the compatibility requirement here? Will the new configuration format be backward compatible? One concrete use case is if a customer upgrades to new version with this multiple address per server capability but wants to roll back without rewriting the config files to older version.\r\n\r\n* Did we evaluate the impact of this feature on existing server to server mutual authentication and authorization feature (e.g. ZOOKEEPER-1045 for Kerberos, ZOOKEEPER-236 for SSL), and also the impact on operations? For example how to configure Kerberos principals and / or SSL certs per host given multiple potential IP address and / or FQDN names per server?\r\n\r\n* Could we provide more details on expected level of support with regards to dynamic reconfiguration feature? Examples would be great - for example: we would support adding, removing, or updating server address that's appertained to a given server via dynamic reconfiguration, and also the expected behavior in each case. For example, adding a new address to an existing ensemble member should not cause any disconnect / reconnect but removing an in use address of a server should cause a disconnect. Likely the dynamic reconfig API / CLI / doc should be updated because of this.",
+        "classification_result": {
+            "property": {
+                "confidence": 0.2045058012008667,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.002910358365625143,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.5465044379234314,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Ted Dunning",
+        "comment": "Taking the questions in order:\r\n\r\n\r\nbq. Did we consider the compatibility requirement here? Will the new configuration format be backward compatible? One concrete use case is if a customer upgrades to new version with this multiple address per server capability but wants to roll back without rewriting the config files to older version.\r\n\r\nYes. We considered this.\r\n\r\nThe compatibility is such that old configurations will work with the new version. New configurations will likely not work with older versions (this is life). Upgrading without configuration changes will allow transparent roll back. Upgrading and changing the configuration to take advantage of multiple configurations will require configuration change to roll back. I think that this is unavoidable with the current configuration format. A better JSON-ish format would be much easier to future proof.\r\n\r\nIf the upgrade is done using multiple DNS A records for each host instead of configuration changes, then transparent roll back should be possible because the old code just takes the first address while the new code accepts all addresses.\r\n\r\nbq. Did we evaluate the impact of this feature on existing server to server mutual authentication and authorization feature (e.g. ZOOKEEPER-1045 for Kerberos, ZOOKEEPER-236 for SSL), and also the impact on operations? For example how to configure Kerberos principals and / or SSL certs per host given multiple potential IP address and / or FQDN names per server?\r\n\r\nYes. This was considered.\r\n\r\nThere are two important cases to consider. The first is the one that arises due to multiple DNS records for the same host name. In this case, binding and authenticating against the same host name should be transparent. We will test this as much as feasible. \r\n\r\nThe second case is where there are multiple host names embedded in the configuration. This case should also work but each separate address must be separately authenticated. Again, we will test this as much as possible.\r\n\r\nbq. Could we provide more details on expected level of support with regards to dynamic reconfiguration feature? \r\n\r\nI don't understand the question. Dynamic reconfiguration involves changing the dynamic part of the configuration file. That can involve addresses, for instance. Such changes should be handled exactly the way they are now and there should be no interactions with the changes to the networking stack. A commit of a new config is a commit.\r\n\r\nbq. Examples would be great - for example: we would support adding, removing, or updating server address that's appertained to a given server via dynamic reconfiguration, and also the expected behavior in each case. For example, adding a new address to an existing ensemble member should not cause any disconnect / reconnect but removing an in use address of a server should cause a disconnect. Likely the dynamic reconfig API / CLI / doc should be updated because of this.\r\n\r\nI don't really see how this pertains other than the desire not to lose a live connection. The documentation, in particular, should be essentially identical except that an example of adding an address might be nice (but kind of redundant).\r\n",
+        "classification_result": {
+            "property": {
+                "confidence": 0.24515597522258759,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.005450845696032047,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.9328984022140503,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Michael Han",
+        "comment": "Appreciate detailed reply, agree on replies on 1 and 2.\r\n\r\nbq. Such changes should be handled exactly the way they are now and there should be no interactions with the changes to the networking stack. \r\n\r\nAgreed. I think I was just looking for more elaborated use cases around using reconfig to manipulate multiple server addresses, as the proposal does not go into details other than 'support dynamic reconfiguration.'. I expect dynamic reconfiguration will just work out of box with proper abstractions, without touching too much part of reconfiguration code path, but there are some subtleties to consider. A couple of examples:\r\n\r\n* Proper rebalance client connections - this was discussed on dev mailing list.\r\n* Avoid unnecessary leader elections during reconfig - this change will probably change the abstraction of server addresses (QuorumServer) and we should be careful how the QuorumServers will be compared, to avoid unnecessary leader elections in cases where the server set is the same but some servers have new server addresses.\r\nThere might be more cases to consider...\r\n\r\nbq. The documentation, in particular, should be essentially identical except that an example of adding an address might be nice\r\n\r\nI am thinking at least [this|https://zookeeper.apache.org/doc/r3.5.4-beta/zookeeperReconfig.html#sc_reconfig_clientport] should be updated to reflect the fact that 1. the config format is changed and 2. the multiple server addresses can be manipulated via reconfig.\r\n",
+        "classification_result": {
+            "property": {
+                "confidence": 0.0998578816652298,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.003953827545046806,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.8832752108573914,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Rakesh Radhakrishnan",
+        "comment": "[~lvfangmin], Feature looks pretty interesting and thanks for the patch. I will try to review it when I get a chance.\r\n\r\nI'd like to understand scaling of this cache in the production env.\u00a0Appreciate\u00a0if you could help me, adding more details about the\u00a0memory usage:\r\n # How much is the java heap size\u00a0of ZooKeeper server and the possible number of znodes (am assuming 4MB data per znode).\r\n # Based on your experiment, what would be the ideal number of elements to be kept into the cache for a\u00a0better read performance gain.\r\n\r\nSince you have mentioned that the intention of read cache feature is to reduce the GC overhead, I would also like to explore the option of enabling the cache backed by {{off heap}}\u00a0memory. Again, you have {{4MB}}\u00a0data in a single zNode and it would occupy good amount of {{on heap}}\u00a0memory area if the number of zNode grows(in future). The off heap implementation uses {{DirectByteByffers}}\u00a0to manage cache outside of the JVM heap and provides scalability to a large memory sizes without GC overhead.\r\n\r\nOne option could be to provide\u00a0different cache modes (onheap or offheap) to the users to efficiently utilize the heap area. Does this make sense to you?",
+        "classification_result": {
+            "property": {
+                "confidence": 0.8944864273071289,
+                "prediction": true
+            },
+            "executive": {
+                "confidence": 0.006822103168815374,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.6606998443603516,
+                "prediction": true
+            }
+        },
+        "property": true,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Benjamin Reed",
+        "comment": "the reason we kept myid out of the config is so that all the servers can use the same configuration file. the id would then be tied with the data.\r\n\r\nthe id of the server should be a rather permanent thing. for example, if you have an ensemble that has ids host1=1, host2=2, host3=3 and an observer with id of host4=4, today to make host3 an observer and host4 a participant you have to go through reconfiguration. with this id configuration option it is tempting to just change the ids (host4=3 and host3=4). this can result in data loss or corruption.\r\n\r\nit's not a show stopper, but we do need to document it properly: even though the id can be set via the configuration file, it should be considered bound to the data directory.",
+        "classification_result": {
+            "property": {
+                "confidence": 0.013781975023448467,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.003929717931896448,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.5314351916313171,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Michael Han",
+        "comment": "bq. If there is no hurry I can pick this up.\r\n\r\nGreat.\r\n\r\nbq. But in order to start we have to decide which are the metrics to expose.\r\n\r\nIf you mean the type of metrics, I think as a start, we can define the most useful types: counter, gauge, and stats (time series data). Later maybe we can add histogram or something more complicated. We need define the interface of the metric system that allows get/set of these metrics types, and then provide some default implementations. The system should allow an external library that implements the same interface to load at runtime (thus called pluggable). \r\n\r\nOnce the interface and default implementation is ready, we can start instrument the code base to collect various metrics. \r\n",
+        "classification_result": {
+            "property": {
+                "confidence": 0.009562677703797817,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.007089436985552311,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.5971655249595642,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Enrico Olivelli",
+        "comment": "IMHO a great idea would be to abstract metrics using the Apache BookKeeper \"stats\" library\r\n\r\n\u00a0\r\n\r\n[https://github.com/apache/bookkeeper/tree/master/bookkeeper-stats-providers]\r\n\r\n\u00a0\r\n\r\nThis in turn has implementations for Codahale (JMX...) and Prometheus. The binding for Prometheus can be attached to the existing Jetty based admin service (it exposes an HttpServlet).\r\n\r\n\u00a0\r\n\r\ncc [~ivank@yahoo-inc.com]",
+        "classification_result": {
+            "property": {
+                "confidence": 0.007960127666592598,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.7654362320899963,
+                "prediction": true
+            },
+            "existence": {
+                "confidence": 0.18682990968227386,
+                "prediction": false
+            }
+        },
+        "property": false,
+        "executive": true,
+        "existence": false
+    },
+    {
+        "author_display_name": "Michael Han",
+        "comment": "I agree we should try providing a seamless upgrade path.\u00a0\r\n\r\n[~nixon] What do you think about my previous proposal on the signal file? I think it's pretty similar with the initialization marker file you introduced in ZK-261 whose presence indicate trust empty DB or not. The signal file's presence indicate trust of the transaction log alone or not (or, ignore the\u00a0-1L == deserializeResult check or not).\r\n\r\nThis is like an automatic flag to turn on / off the deserializeResult check by ZK itself.",
+        "classification_result": {
+            "property": {
+                "confidence": 0.02894008718430996,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.0027729813009500504,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.5324122309684753,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Antonio Rafael Rodrigues",
+        "comment": "Actually, I don't know for sure as I'm not familiarized with zookeeper's design. But I've got some thoughts.\r\n\r\n1 - If we introduce a new KeeperState ClientSessionTimeout, we would have to emmit WatchedEvent(ClientSessionTimeout) instead of the WatchedEvent(Disconnected) and there are current clients that expect WatchedEvent(Disconnected) for the case of client session timeout.\r\n\r\n2 - I'm thinking about some options:\r\n \u00a0\u00a0 \u00a0a) we could add a field, some kind of EventInfo, to WatchedEvent. Of course we'd have to come up with a way to have different information on EventInfo, depending on the KeeperState. \r\n \u00a0\u00a0 \u00a0b) another way would be to have a subclass of WatchedEvent, that subclass would hold the details about the event. The clients, verifies if the KeeperState==Disconect, if so it could make a cast of WatchedEvent to WatchedEventDisconect and get some valueable information. \u00a0\r\n \u00a0\u00a0 \u00a0c) we could have a field with some key-value structure in WatchedEvent, so we could add values to this field depending on the KeeperState. The client would have to verify the KeeperState in order to know what informations are available in the key-value structure",
+        "classification_result": {
+            "property": {
+                "confidence": 0.01025626715272665,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.009314288385212421,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.6118769645690918,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Andor Molnar",
+        "comment": "Hi [~xiaoheipangzi]\r\n\r\nThanks for the nice contribution, I really appreciate your enthusiasm to develop such a handy tool.\r\n\r\nHowever, have you checked if it would be possible to similar check with our existing static analysis tool, findbugs?\r\n\r\nIn addition to that, there's an ongoing effort in [https://github.com/apache/zookeeper/pull/490]\u00a0to integrate Google's error prone compiler for very similar purposes. I'm not sure if you've seen that, but I think it worth to consider bringing these existing tools up to speed before implementing something new from scratch.",
+        "classification_result": {
+            "property": {
+                "confidence": 0.09405894577503204,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.8920485973358154,
+                "prediction": true
+            },
+            "existence": {
+                "confidence": 0.045987095683813095,
+                "prediction": false
+            }
+        },
+        "property": false,
+        "executive": true,
+        "existence": false
+    },
+    {
+        "author_display_name": "Dan Benediktson",
+        "comment": "[~hanm] No, local sessions are not a sufficient mitigation for the problems introduced by this proposed feature:\n- Local sessions can be upgraded to a global session at any time by creating an ephemeral node; basically, enabling local sessions across an ensemble does not guarantee that all sessions are local. If one of them upgrades, for instance, what happens to the other one?\n- Moreover, I believe this proposed feature would let you accidentally reuse a local session across two members of the same ensemble. Imagine two sessions connect to different members and get the same session ID: now, one of them disconnects and tries to reconnect, and lands on the second server (this is possible: local sessions are purely a server-side concept, so in practice clients with a local session DO try to reconnect to another server, even though it is guaranteed to fail). I expect it would succeed, at which point there are would be two connections for the same local session, one of which actually originated from another node. I don't know precisely what this would entail, but it's probably also undesirable.",
+        "classification_result": {
+            "property": {
+                "confidence": 0.22914758324623108,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.007415768224745989,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.9609521627426147,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Michael Han",
+        "comment": "I think adding the option to skip the default ACL is reasonable - the general idea of providing an escape hatch is useful in any cases, in particular for debugging.\n\nbq. It also, perversely, makes security worse as the entire ZooKeeper instance must be opened to \"super\" user while enabled reconfig\nThis is kind of true because of unrestricted access for superuser. ZK does not have a formal threat model so it is not clear to me what kind of security risk running a cluster in superuser mode would be - in any case this should be discussed in another JIRA, because if superuser is not necessarily tied to the dynamic reconfig use cases, if having a superuser exposes certain security risk we should probably try address that, for example making this a debug only feature.\n\nMeanwhile I'd argue the approach proposed in this patch is not safer either. The approach this patch is using is to do online ACL configuration, and that is not safe comparing offline ACL configuration because there is an open window during which an attacker can access the cluster and configure the ACLs on various zNode including the reconfig node, even with authentication in place (assume we have malicious Kerberos users for example - so we have to do authorization in addition to authentication.). It is certainly possible to improve the current solution such that we don't need superuser running for reconfig plus also retain the offline configuration, but that's a better fit for a separate JIRA.\n\nSo I am +1 with the idea on introducing a skip option, but I'd like to revise some of the messages delivered in the documents. In particular does not advertise it is a safe / secure approach for setting up reconfig, but instead mention this as a convenient option for debugging / experimenting with reconfig feature.\n\nIn general we are still safe because reconfig as a feature has to be opt-in (by default it's disabled). ",
+        "classification_result": {
+            "property": {
+                "confidence": 0.32701635360717773,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.0033731465227901936,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.9285510182380676,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Michael Han",
+        "comment": "Latest patch looks good to me. \n\n[~fpj] I was thinking about having a parameterized ACL as a config option similar as you mentioned, which has the benefit of combined flexibility and security (offline configuration). I think we should add that as well. The question is should we keep the skipACL check option proposed in this patch, or dump it in favor of the (overloaded) parameterized ACL config option? I am leaning towards keep the skip ACL check option in this patch, which sounds like a good option for user in use cases where they either don't care about security, or security is enforced by other mechanisms, without thinking too much about the semantic of the parameterized ACL, which might make ZK easier to use. We can add the parameterized ACL config option for the config node in a separate JIRA.",
+        "classification_result": {
+            "property": {
+                "confidence": 0.21692299842834473,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.001708578085526824,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.6558926105499268,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Enrico Olivelli",
+        "comment": "[~rakeshr] thank you for taking a look.\n\nI have been  running ZooKeeper server in production together with other applications which use ZK since quite some time (years).\nUsually these application have been designed to run in a distributed architecture but they are installed in standalone mode for customers which need a simple solution, do not need to process heavy loads and it is better to have only a single process/application to deploy and maintain.\n\nWhen running ZK server in the same JVM of the client application you have to ensure that ZK server has the requested amount of memory to work, no OutOfMemoryErrors, no frequent full GCs.\n\nYou have to be sure that the ZK server boots cleanly as first component of the application and take into account that the boot will not be immediate. Actually there is no official API to boot a ZK server (for instance Curator TestingServer is prefixed 'Testing' and it is not made for production)\n\nAn interesting issue that I have found is about ephemeral nodes and expired sessions:\nif you start/stop the ZK server together with the application, sessions opened from a \"previous life\" of the application will not expire during the \"stop\" time as no leader is running and so at the next boot ephemeral nodes created by the application are likely to be still present for a \"little\" (but unpredictable) time.\n\n\n\n",
+        "classification_result": {
+            "property": {
+                "confidence": 0.011091542430222034,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.02272297628223896,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.6655856966972351,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Michael Han",
+        "comment": "One option is to enable TLS for ZooKeeper client-server communication. Because TLS is on a different port (secureClientPort) than the four letter words port (clientPort), we can then put clientPort behind a firewall which effectively makes only admin (or whoever that's trusted) can execute four letter words.\n\nThis however does not address the issues completely, because TLS is only supported since ZooKeeper 3.5.1 so it would not work for 3.4.x. Also even with TLS presence, it might still be possible that a ZooKeeper ensemble is attacked as long as the ensemble is open to the world: we don't have rate limiting built in, so if a set of rogue clients making connection requests, when in large scale, could possibly keep ensemble too busy to serve other requests. Although we do have IP based authentication scheme we don't have any rate limiters implemented to enforce accesses in such case.\n\nI believe the original design consideration for ZooKeeper was that ZooKeeper ensembles should only be accessible from a trusted computing environment instead of opening to the world. This design decision made perfect sense in the Hadoop context but might not be ideal given today's thread models (e.g., it is never safe to trust any network communication, attackers exist inside the corporate network, and so on.). As such, we may need to change the assumption on where ZooKeeper is going to be deployed and operated, but before that, to address this specific issue documented in the JIRA, we could do a combination of:\n\n* As Patrick suggested, add configurations options to turn off four letter words and / or specific commands.\n* Document explicitly the recommended security practice on deploy and operate ZooKeeper - basically admin should not leave the ZK wide open to the world.\n\nI think a patch contain both should be enough for resolving the current issue.\n\nIn long term, we need reevaluate the design decisions and security thread models and to bridge the gap between the current design and what ZooKeeper is actually used in prod today (e.g. adding rate limiter, enforced access control, not just for TLS but also for Kerberos, like what ZOOKEEPER-1634 is trying to solve.).",
+        "classification_result": {
+            "property": {
+                "confidence": 0.07852185517549515,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.006173841189593077,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.9149638414382935,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Patrick D. Hunt",
+        "comment": "I had another thought on how to handle this - rather than on/off we could limit the number of 4lw that would be allowed to run in parallel. For example we could allow only a single 4lw to run at any one time. This would still provide the ability to run a 4lw, but with protection against overuse. It seems like this should be fairly simple to implement. Additionally we could provide this as an option (e.g. some folks might want to allow 5 to run in parallel). Regardless if we take this approach I think we would still want the on/off switches I already detailed.",
+        "classification_result": {
+            "property": {
+                "confidence": 0.26475563645362854,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.0023224607575684786,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.8147128820419312,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Michael Han",
+        "comment": "bq. Can we restrict 4lw commands based on IP By default we can allow access to the IP on which server is running.\n[~arshad.mohammad] Thanks for feedback, this is one way of addressing the issue. I still prefer the current command white list approach because:\n* It has a smaller scope than the IP-restriction based approach. It is simpler, less cases to test, and easier to understand.\n* One case about IP based approach - what if the access point which IP is white listed gets compromised and admins are not aware of such case (so reconfigure the IP white list will not be done in time)? In that case, this exploit is still possible from the compromised and white listed access point. On the other side, the command white list approach does not have this issue, if the watcher monitoring commands listed in this issue are not white listed, there is no way to exploit. \n\nOverall I think the IP white list approach is a nice to have as it provides the option to use the entire sets of commands while mitigating the potential risk of being exploited - while the command white list approach is a must have based on my previous arguments. I propose we get the command white list patch in, and then the release out, and then think about how to improve the overall access control of ZK in the wild, unless the current command white list does not address the security concern raised by this JIRA. \n",
+        "classification_result": {
+            "property": {
+                "confidence": 0.4115658700466156,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.0026575312949717045,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.8837130665779114,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Michael Han",
+        "comment": "bq. IIUC, these are two problems -> case-1) restrict 4lw cmd execution as few cmds taking too much time for execution. case-2) protection against overuse because it creates many connections.\n\nYes, this is a good summary. Two problems - one is to fix the obvious exploits related to watcher 4lw and the other is to prevent abuse of 4lw in general. This JIRA's scope is targeting the first one, which fixes immediate issue and unblocks two important ongoing releases. We can easily get out of scope if we want to completely fix the security of the 4lw which was not designed with security in mind while balancing compatibility and minimize disrupt to existing users, so I'd recommend we stick to the current scope (unless as I mentioned earlier folks feel strongly against the white list approach.).\n\nbq. could you create a PR for branch-3.4\nI will once I get this landed in 3.5. PR to 3.4 will not be much different, but I'd like to finalize this PR first to avoid potential duplicated efforts.\n\nMeanwhile, I'll create a set of follow JIRAs to address concerns of abusing 4lw in general:\n* A new config option to turn on / off 4lw w/o a middle ground (sure we can use empty white list for this purpose but a separate option is better IMO from the point of view of deprecating a feature.).\n* 4lw rate limiting including concurrent command runs configuration.\n* Fix client / script to avoid using 4lw - it is unfortunate ZK itself depends on 4lw.\n\n",
+        "classification_result": {
+            "property": {
+                "confidence": 0.8171367645263672,
+                "prediction": true
+            },
+            "executive": {
+                "confidence": 0.0023432716261595488,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.7855516672134399,
+                "prediction": true
+            }
+        },
+        "property": true,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Kfir Lev-Ari",
+        "comment": "[~nerdyyatrice], can you please describe the scenario in which the same request is processed in the queue twice? \n\nAs I see it, if a request r is received from a local client, then r is added to the queue (note that r was already sent to the leader prior to that point).\n\nOnce a commit arrives from the leader, r is processed, and r won't be back to the queue, regardless of a possible client disconnection (AFAIK, the connection is only needed at the end of the line, when some kind of result is returned).\n\nNow, lets say the client gets disconnected at some point in the time frame above while r is processed, and connects to some server (same server or different). \n\nIf a commit arrives to a different server, r will be processed as if it belongs to a remote client, i.e., we will only perform the update, without using the connection. I'm not sure that after disconnection ZK is required to inform the client's new session on his past actions.. (but I guess it can also be fixed if needed).\nIf a commit arrives and r is in the queue waiting for it, then it is processed as if it belongs to a local connected client, but eventually the connection handle will show that that connection ended, (if I remember the code correctly), so nothing to report, but ZK continue as usual. \n\nNote that if a client writes something with lower cxid than r, the commit processor doesn't track such a behavior, i.e., it is possible that the next head after r will have lower cxid than r. We only care about the order of commits that we receive from the leader, and that order can't be changed, because it is based on the network protocol order of messages (i.e., if r was already sent to the leader, than clearly r is committed prior to any new message of the same client). \n\nBottom line, it seems like r is processed only once per processor. What am I missing?",
+        "classification_result": {
+            "property": {
+                "confidence": 0.021955927833914757,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.006693222094327211,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.772028923034668,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Kfir Lev-Ari",
+        "comment": "Oh, I see. Well, the leader is the one that sends commit messages (i.e., saying that an update should be committed). \nUnless I'm mistaken, based on ZAB (i.e., ZK's consensus algorithm), leaders wouldn't send commit of the same message twice. I'm not sure about the exact locations in the code that you can read in order to validate it (here is a link about ZAB - https://cwiki.apache.org/confluence/display/ZOOKEEPER/Zab1.0).",
+        "classification_result": {
+            "property": {
+                "confidence": 0.04100410267710686,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.0032696211710572243,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.6842035055160522,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Diego Ongaro",
+        "comment": "bq. Callback should be called with ConnectionLossException before createSync() is send to the server, because internally all requests \u2014 sync or async \u2014 are serialized through the same queue. --[~rgs]\n\nI've observed that subsequent requests do not block on the return of the callback from prior requests. In other words, I can't count on my /data-23857 callback to see and process the ConnectionLoss before my /pointer request is sent out on the new connection. (And even if I could, that programming model would be error-prone and burdensome.)\n\nBTW, whether the second create is sync or async isn't important in the example. The problematic situation could arise even if both were createAsync.\n\nbq. It sounds like the assumption here is that a createSync() should fail if a previous createAsync() call failed? That should be left to the application, no? Internally, all replies/events are delivered in order so ordering shouldn't be broken \u2014 no? --[~rgs]\n\nCan you clarify?",
+        "classification_result": {
+            "property": {
+                "confidence": 0.057140156626701355,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.003062563482671976,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.8085818290710449,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Flavio Paiva Junqueira",
+        "comment": "Thanks for starting this discussion, [~ongardie].\n\nSome of the issues you're describing, we only had the opportunity to discuss in more detail in the book. It is really not self-promotion, and it is where we had a chance to talk more about some of the subtleties we have.\n\nLet me first acknowledge that it is possible that we submit asynchronously operations OP1 and OP2, such that OP2 is executed and OP1 isn't. This can happen in the case that the connection is lost while the client is processing OP1, the callback is set to deliver the connection loss event, a new connection is created, and OP2 is submitted concurrently. ZooKeeper in this scenario makes two important guarantees: 1) it notifies the application that there has been an error for OP1; 2) it doesn't reorder the execution of OP1 and OP2. If they both execute, it will follow the order of submission.\n\nIf you're building an application, then you have two choices with the current API. You can be optimistic and submit asynchronous operations in a tight loop. In the case you fall in the situation I describe above, then you might need to execute some recovery procedure. If as an application designer you don't want or can't execute such a procedure, then you'll have to execute one at a time.\n\nIn your first example, you're mixing the synchronous and the asynchronous API. We don't actually enforce that an application uses one or the other, but we do not recommend to mix synchronous and asynchronous calls precisely because of the reasons you're raising.\n\nAbout your proposal, it is fairly extreme, so I'm -1 as is. However, there is one thing we have discussed at some point, but never really got to do, is to fail all operations upon a connection loss and only re-enable upon an explicit indication from the application, like a {{reenableOps}} call. It achieves the same effect of dropping a suffix of operations and does not require all the changes you're proposing. It should be a fairly simple change to make and it is compatible with the current API. ",
+        "classification_result": {
+            "property": {
+                "confidence": 0.05661529302597046,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.0034333120565861464,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.7200227379798889,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Diego Ongaro",
+        "comment": "Thanks for the quick replies.\n\nbq. In your first example, you're mixing the synchronous and the asynchronous API. We don't actually enforce that an application uses one or the other, but we do not recommend to mix synchronous and asynchronous calls precisely because of the reasons you're raising.\n\nIn my three-line example, it doesn't matter whether the second create is synchronous (mixing) or asynchronous (not mixing). Isn't it fine to issue a series of asynchronous calls ending with a synchronous call?\n\nSummarizing the *{{reenableOps()}}* proposal so far, we have:\n - A new configuration option (say, \"requireReenableOps\") for an application to opt into calling {{reenableOps()}}. This would preserve backwards compatibility for existing clients, so the default would be to keep today's behavior.\n - Upon a connection loss, the client library would still reconnect automatically and issue pings as needed. However, with the configuration option set, it would continue to fail all requests (both synchronous and asynchronous).\n - After the application calls {{reenableOps()}}, the client library would permit new requests to use the new connection.\n\nThis would work, but in terms of API design, I can think of a couple of drawbacks:\n\n- If we consider an application that's spread across various modules and/or thread boundaries, it has to be carefully designed with respect to {{reenableOps()}}, as this is a global property. I think this is what [~breed] was getting at with \"it affects everything using the zookeeper handle\". Specifically, every module/thread must be ready for a call to {{reenableOps()}} before it is safe to invoke, and until such time, the application won't make much progress.\n\n- Most asynchronous code will need to know whether it's running under requireReenableOps=false or requireReenableOps=true. This might complicate a reusable library's internals and API, which may need to have different behavior depending on this setting.\n\nThe *{{getConnection()}}* proposal doesn't have these problems. Some modules of an application can continue issuing synchronous calls on the ZooKeeper object, others can issue (deprecated) asynchronous calls on the ZooKeeper object, and yet others can use ZKConnection objects, moving to new connections at their own pace with no application-level synchronization.\n\nbq. it sounds to me that getConnection() and reenableOps() are basically the same. right? or are you proposing that when you get a ZKConnection object you can invoke the zookeeper operations on that?\n\nYou would invoke the operations directly on the ZKConnection object.\n\nI do like the idea of the library automatically reconnecting for pings, and we could apply that to the {{getConnection()}} proposal too:\n- The library would reconnect automatically to issue pings, as it does now.\n- {{ZooKeeper.getConnection()}} would return the current ZKConnection object, which wraps the current TCP connection.\n- Upon a connection loss, all subsequent operations on the same ZKConnection would return a Connection Loss error. The library would internally reconnect automatically, but it would not make this TCP connection availble via the old ZKConnection.\n- Upon noticing a connection loss, the application would need to call {{ZooKeeper.getConnection()}} again to get the new ZKConnection object.\n\nThe ZKConnection object certainly needs to export the asynchronous methods that are in ZooKeeper today. I think it should also export the synchronous methods. I think these are both well-defined and useful in ZKConnection, as in my original example with {{createAsync()}} followed by {{createSync()}}.\n\nI think the ZooKeeper class should continue to export non-deprecated synchronous methods as well. These would just be convenience wrappers that invoke {{getConnection()}} followed by the synchronous operation on that. Much ZooKeeper code is entirely synchronous, and as such, does not depend on FIFO client order. I see no reason to force churn upon that code.\n\nI still think the asynchronous calls on the ZooKeeper class should be deprecated, since applications cannot rely on FIFO client order when using them. At a minimum, these should have a very clear warning to this effect, and applications should be encouraged to get a ZKConnection and then make asynchronous calls on that.\n",
+        "classification_result": {
+            "property": {
+                "confidence": 0.10590509325265884,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.006399180740118027,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.9200040698051453,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Benjamin Reed",
+        "comment": "thanx diego, you did express well what i was trying to say. i also like your proposal. there are probably more details to work out, like how would it look for the C api? i like how it encapsulates nicely the relation between a sequence of operations, and your example does make a compelling argument for also including the sync api.\n\ndo we have some applications that we can use to validate the api? it would be nice to validate the design before we standardize it.\n\nwhat i meant by \"i think it's a good idea to document this issue in this jira\" is that it's good that we have this jira to discuss the problem and potential solutions.",
+        "classification_result": {
+            "property": {
+                "confidence": 0.07201506197452545,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.015638120472431183,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.8210451006889343,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Flavio Paiva Junqueira",
+        "comment": "bq. In my three-line example, it doesn't matter whether the second create is synchronous (mixing) or asynchronous (not mixing). Isn't it fine to issue a series of asynchronous calls ending with a synchronous call?\n\nMaybe, it depends on where you make the synchronous call. If you call it from a callback, then you may end up re-ordering the results. After checking it again, I don't think it is super important for this discussion. In your simple example, you're right that it doesn't matter whether the second call is sync or async.\n\nI like the idea of not making the behavior global and configurable via switch. In particular, the configuration switch is error prone. I still think that mixing API use and different behavior, even across modules, with the same ZK handle isn't good practice, but I'm fine with leaving it up to the application to decide, though.\n\nOn {{getConnection}}, I have a few high-level points:\n\n# I like the fact that it is all client side and it makes it clear to the application that requests are being sent over a given connection. Once the connection drops, a proper suffix of the operations will receive an error.\n# I'd rather not have the sync api and the async api over different objects. The proposal has the sync api in the zookeeper handle and the async api in the connection object. I'll discuss this some more below.\n# I don't like much the idea of exposing a \"connection\". The abstraction we have historically is a session and the fact that a session can have multiple connections over time is mostly transparent to the application, except for the connection loss event, which makes it clear that there are multiple connections going on underneath.\n\nOn the second point, we don't necessarily have to move the async api to such a connection object. We could instead have something like a token and the token essentially represents a connection. If the connection drops, then the token is invalidated. With such a token, we will be adding a new call for each operations to the handle, something like:\n\n{code}\npublic void create(final String path, \n                            byte data[],\n                            List<ACL> acl,\n                            CreateMode createMode,\n                            StringCallback cb,\n                            Object ctx,\n                            FIFOToken token);\n\n{code}\n\nand also a call to get the current token:\n\n{code}\npublic FIFOToken getFifoToken() {\n    return this.fifoToken;\n}\n{code}\n\nAgain, the main reason for suggesting this is to enable such FIFO-enforced calls in the handle API rather than having a connection object.\n\nAnother point I was thinking about with respect to the use of {{getConnection}} is the following. If I'm a developer, where should I call it and when? In principle, we can do it upon receiving a {{SyncConnected}} event via the default watcher (transition from {{Disconnected}} to {{SyncConnected}}. It might not be possible to do it at that point in the case I have one or more threads submitting operations, though. The applications will need to pause before we get the new connection, otherwise we can have a mix of threads sending to the invalid connection while others send to the new connection. In the case it is ok that the FIFO order guarantee is per thread, we can have each thread individually calling {{getConnection}} (or whatever other variant we end up agreeing upon) upon receiving a connection loss error. \n\nThe last point of the list is important because we have proposed quite some time back to remove connection loss by resending upon reconnecting in ZOOKEEPER-22. If we resend, then we won't be erroring out requests with a connection loss event upon dropping a connection. If we do it, then we avoid the gaps that we are discussing in this issue in the first place. ZOOKEEPER-22 needs work on the server-side, though. On the positive side, the client-side API changes are minimal. \n\n",
+        "classification_result": {
+            "property": {
+                "confidence": 0.10462452471256256,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.009154324419796467,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.9567422270774841,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Diego Ongaro",
+        "comment": "bq. I don't like much the idea of exposing a \"connection\". The abstraction we have historically is a session and the fact that a session can have multiple connections over time is mostly transparent to the application, except for the connection loss event, which makes it clear that there are multiple connections going on underneath. --[~fpj]\n\nNobody wants ZOOKEEPER-22 more than I do ;). It would solve this issue and make correct ZooKeeper usage so much simpler. But until ZOOKEEPER-22 is done, the concept of a connection is not hidden from applications, and exposing connections may be the most straightforward and honest thing to do. Even with the FIFO token, the application would need to know to grab a new FIFO token after seeing a connection loss event, so FIFO tokens can't be a fully separate concept from connections.\n\nOtherwise, the FIFO token vs {{getConnection()}} are equivalent in terms of their expressiveness, so I see the choice as a question of aesthetics.\n\n\nbq. Another point I was thinking about with respect to the use of getConnection is the following. If I'm a developer, where should I call it and when? In principle, we can do it upon receiving a SyncConnected event via the default watcher (transition from Disconnected to SyncConnected. It might not be possible to do it at that point in the case I have one or more threads submitting operations, though. The applications will need to pause before we get the new connection, otherwise we can have a mix of threads sending to the invalid connection while others send to the new connection. In the case it is ok that the FIFO order guarantee is per thread, we can have each thread individually calling getConnection (or whatever other variant we end up agreeing upon) upon receiving a connection loss error. --[~fpj]\n\nI'd argue strongly for the latter approach of using connections/FIFO tokens only locally. Applications should grab a connection/FIFO token when they're doing asynchronous work, then forget it and grab another one later when needed.\n\nIf someone did want the FIFO client order guarantee across threads, they might be insane, but they can share their connection/FIFO token across threads. I don't think this will be common usage.\n\nTaking the example from page 4 of the paper, here's some possible code:\n\n{code}\npublic void newLeader(ZooKeeper zk, ArrayList<string> config) {\n    while (true) {\n        ZKConnection conn = zk.getConnection()\n        // \"The new leader makes the configuration change by deleting ready, ...\"\n        conn.deleteAsync(\"/ready\", callback=logStuff)\n        // \"...updating the various configuration znodes, ...\"\n        for (int i = 0; i < config.size(); i++) {\n            conn.createAsync(\"/config-\" + i, config.get(i), EPHEMERAL, callback=logStuff)\n        }\n        // \"...and creating ready.\"\n        try {\n            conn.createSync(\"/ready\", \"\", EPHEMERAL)\n        } except (ConnectionLoss) {\n            continue;\n        }\n        return;\n    }\n}\n{code}\n\nNote that this code is grabbing a connection (FIFO token) before starting its pipeline, using it locally, then dropping it. In case of a connection loss, it gets another one.\n\nThis could be more sophisticated by keeping track of which operations had previously succeeded in the callbacks, but it shouldn't be necessary.\n\nWe could also sprinkle in:\n{code}\n        if (conn.isLost()) {\n            continue;\n        }\n{code}\nas an optimization/pessimization, but again, it shouldn't be necessary.\n\n\\\\\n----\n\\\\\n\nbq. do we have some applications that we can use to validate the api? it would be nice to validate the design before we standardize it. --[~breed]\n\nGood point. I think we'd want well-intentioned applications that make async calls, maybe some that care about FIFO order and some that don't. Any ideas?\n\n\nThere are a couple more alternatives I want to raise for discussion:\n\nOne possible stance would be: _Well, this adds too much complexity, so you can't have FIFO client order until ZOOKEEPER-22 is done_, WONTFIX.\n\nAnother more extreme stance would be to eliminate the FIFO client order guarantee altogether. A big question I've been wondering about is whether FIFO client order is useful in real world applications, and whether it's worth the implementation trouble.\n\nFIFO client order provides two potential benefits:\n - Leveraging FIFO client order may improve application performance. It does not add significant runtime cost in general, yet it can reduce round-trip stalls for applications that leverage it.\n - FIFO client order may simplify reasoning about applications by reducing the possible state space that they operate in.\n\nOn the other hand:\n\n - FIFO client order adds complexity to the implementation. It has to be guaranteed at every level of the stack. This issue shows how it was lost in the highest levels of the client API. Even if we fixed this issue, Curator or other wrappers might still throw away FIFO client order at even higher levels. And at lower levels, though the current implementation maintains FIFO client order, this has widespread implications restricting its design, including its consensus algorithm, its threading model, and its choice of transport protocol.\n - Relatedly, solving ZOOKEEPER-22 would be simpler by eliminating the FIFO client order guarantee, as the library could retry operations in any order (both reads and writes).\n - How many applications rely on FIFO client order? Users didn't seem to notice this bug. Does that imply they're doing just fine without FIFO client order, or are the conditions for this bug so rare that it did not come up in production or testing?\n - Using FIFO client order correctly seems difficult. My above sample code, for instance, looks simple but is quite subtle and fragile. It assumes the asynchronous operations will succeed as long as the connection is not lost (existing znodes in the way? ACLs? quotas after ZOOKEEPER-451?), and it only avoids leaving garbage behind on client crashes by using ephemeral nodes. Compare to a version that issues all the createAsync requests, blocks on their successful completion (possibly recovering from errors in nontrivial ways), then creates the /ready node. I think it'd be easier to see why that version works, at the runtime cost of an extra round trip delay.\n\nI know this is only tangentially related to this issue, but I'm really interested in hearing your thoughts.",
+        "classification_result": {
+            "property": {
+                "confidence": 0.20312058925628662,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.015497202053666115,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.9785736799240112,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Flavio Paiva Junqueira",
+        "comment": "We use the txn log for durability and the updates to the zk database are written synchronously to the log before we respond to the client. Using a txn log is efficient because we only append to the log and write sequentially to the file. Snapshots are written to disk asynchronously, and are only used to speed up recovery. The \"source of truth\" for the state of a server is the txn log.\n\nIn your case, you just need to provision and configure your system accordingly. You could, for example, reduce the frequency of snapshotting with the {{snapCount}} parameter. You also need to make sure you have enough free space. If the device is shared, it is possible that other applications are filling it up.",
+        "classification_result": {
+            "property": {
+                "confidence": 0.011496578343212605,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.7665368318557739,
+                "prediction": true
+            },
+            "existence": {
+                "confidence": 0.014100315980613232,
+                "prediction": false
+            }
+        },
+        "property": false,
+        "executive": true,
+        "existence": false
+    },
+    {
+        "author_display_name": "Edward Ribeiro",
+        "comment": "[~randgalt], another edge case would be the following: a client create a container znode and populate it with children znodes. This client is the only in charge of deleting the children. Another clients should only be able to read the children znode contents, but a misbehaved client can delete children znodes in the container znode. With ACL properly set this other clients would not be able to delete the children of the master client. Does it make sense?",
+        "classification_result": {
+            "property": {
+                "confidence": 0.017972951754927635,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.003804080421105027,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.6000043153762817,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Sergey Shelukhin",
+        "comment": "hasSufficient... also updates the latest time, so it still  needs to be called.\nI am not really familiar with the code enough to refactor, just trying to fix the immediate issue that we see where error is swallowed and the retry is broken, so it's impossible to debug. Perhaps it can be done in a followup, but it doesn't look like this class has any test coverage and the method is quite a tangle. \nI can make the rest of the changes. Does ZK officially not support Java 6?",
+        "classification_result": {
+            "property": {
+                "confidence": 0.00756128691136837,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.7090261578559875,
+                "prediction": true
+            },
+            "existence": {
+                "confidence": 0.01127550657838583,
+                "prediction": false
+            }
+        },
+        "property": false,
+        "executive": true,
+        "existence": false
+    },
+    {
+        "author_display_name": "Andor Molnar",
+        "comment": "Hi [~botond.hejj]\r\n\r\nWould you like to carry out this patch and potentially create a pull request on github?\r\n\r\nI've tested it and found nice and simple solution to enforce authentication. However there're other Jiras linked to this which has fundamentally different approaches by disconnecting the client immediately if it doesn't authenticate itself. Though as far as I could see, those patches aren't ready yet and needs somebody to continue. They sound like significantly stronger defense of the system, what do you think?\r\n\r\nWe cannot commit orthogonal patches for a problem, so we have to make a decision which way to go.\r\n\r\nHow would you differentiate your patch from the others?\u00a0\u00a0",
+        "classification_result": {
+            "property": {
+                "confidence": 0.6528998017311096,
+                "prediction": true
+            },
+            "executive": {
+                "confidence": 0.06991296261548996,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.20361189544200897,
+                "prediction": false
+            }
+        },
+        "property": true,
+        "executive": false,
+        "existence": false
+    },
+    {
+        "author_display_name": "Mohammad Arshad",
+        "comment": "# javacc dependency is not something new in zookeeper-3.5.2-alpha release. it is there even in zookeeper-3.5.1-alpha and zookeeper-3.5.0-alpha releases\nThis dependency is required because jute compiler code is being generated in every build. jute compiler code does not already exist. \nWhether we should have it as run time dependency or not is another aspect, and not related to the concern raised in the jira\n# javacc dependency is not present in zookeeper-3.4.8. It is not required because jute compiler code is not being generated every time it is checked-in\n\nWhat is the problem with javacc dependency? is it causing any problem when you are using with some other project? ",
+        "classification_result": {
+            "property": {
+                "confidence": 0.006433970294892788,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.7202170491218567,
+                "prediction": true
+            },
+            "existence": {
+                "confidence": 0.013578482903540134,
+                "prediction": false
+            }
+        },
+        "property": false,
+        "executive": true,
+        "existence": false
+    },
+    {
+        "author_display_name": "Mohammad Arshad",
+        "comment": "Before proceeding ahead, first we should clearly define what is user in zookeeper through API.\nIf this solution is only for kerberos authentication then not required otherwise it is must. \n\norg.apache.zookeeper.data.Id class is used to store scheme and id.\n{code}\npublic Id(\n        String scheme,\n        String id)\n{code}\nid field holds only user in most cases but in some cases it holds user as well as password\n\nBy default there are only four authentication provider \nDigestAuthenticationProvider\nIPAuthenticationProvider\nSASLAuthenticationProvider\nX509AuthenticationProvider\nIn code we can check if scheme is digest then {{id.split(\":\")\\[0\\]}} is user otherwise id is user. This will work only if we are limited to above four authentication provider\n\nBut Custom authentication provider are very important and are very commonly used. How the zookeeper code will know what is the user, is it id or  {{id.split(\":\")\\[0\\]}} or anything else ?\nSo there is need to define to add new API which AuthenticationProvider providers implement to define what is user.\nFor example DigestAuthenticationProvider will implement as\n{code}\n@Override\npublic String getUserName(String id) {\n\treturn id.split(\":\")[0];\n}\n{code}\nSASLAuthenticationProvider will implement as \n{code}\n@Override\npublic String getUserName(String id) {\n\treturn id;\n}\n{code}\nCustomAuthenticationProvider will implement as \n{code}\n@Override\npublic String getUserName(String id) {\n\t// Some logic and then return user\n\treturn user;\n}\n{code}\nThis is how zookeeper code will get the user for any authentication scheme\n{code}\nId id=Get id from org.apache.zookeeper.server.Request.authInfo\nAuthenticationProvider authProvider = ProviderRegistry.getProvider(id.getScheme());\nString user=authProvider.getUserName(id.getId());\n{code}",
+        "classification_result": {
+            "property": {
+                "confidence": 0.12574796378612518,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.017370039597153664,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.8425310254096985,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Flavio Paiva Junqueira",
+        "comment": "[~arshad.mohammad] [~botond.hejj] [~eribeiro] thanks everyone for patch and reviews. As I'm reading there are two main concerns:\n\n# Absence of support for Netty\n# Definition of user (or use id directly?)\n\nwhat's the current plan? My take is that we need netty support because going forward folks will be using more the netty option because of, for example, ssl support. I also think that we need a crisp story around users to avoid problems with future auth providers. It affects the semantics that the service exposes, so we need to be extra careful.\n\nIt is a great feature, though. We should get it in once we sort out these issues. ",
+        "classification_result": {
+            "property": {
+                "confidence": 0.026642663404345512,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.5472434163093567,
+                "prediction": true
+            },
+            "existence": {
+                "confidence": 0.012983829714357853,
+                "prediction": false
+            }
+        },
+        "property": false,
+        "executive": true,
+        "existence": false
+    },
+    {
+        "author_display_name": "Edward Ribeiro",
+        "comment": "{quote}\n It will add unnecessary additional latency (the RTT latency for TCP handshake) and overhead to every connection, even successful ones where the ensemble isn't suffering due to a down host; it'll also put a little extra load on the servers, not just clients.\n{quote}\n\nHi [~dbenediktson], \n\nYeah... I was aware of the extra pressure on the servers and, to some degree, the cost of opening a ephemeral TCP connection on each server of my proposed workaround. :( OTOH, {{InetAddress#isReachable()}} (quoting javadocs) will: {quote} (try to) use ICMP ECHO REQUESTs if the privilege can be obtained, otherwise it will try to establish a TCP connection on port 7 {quote}\n\nIf [~vishk] don't oppose, I am more than happy to see your patch for that part. :) In the meanwhile, I will dig {{ClientCnxnSocket}} further more following your guidelines.\n\nCheers,\nEd",
+        "classification_result": {
+            "property": {
+                "confidence": 0.611782431602478,
+                "prediction": true
+            },
+            "executive": {
+                "confidence": 0.0026456802152097225,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.10844241827726364,
+                "prediction": false
+            }
+        },
+        "property": true,
+        "executive": false,
+        "existence": false
+    },
+    {
+        "author_display_name": "Dan Benediktson",
+        "comment": "Correct, I don't think there is a patch in a completed state.\n\nThe patch I provided was just to avoid a specific problem during the most recent proposed solution: the problem where you try to connect using only a slice of the connection time, but the chosen slice is too small to reasonably expect a connection to succeed. I think [~eribeiro] offered to look at a comprehensive solution, so I'm assigning over to him for the time being.",
+        "classification_result": {
+            "property": {
+                "confidence": 0.06688500940799713,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.0025595168117433786,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.6180278062820435,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Flavio Paiva Junqueira",
+        "comment": "bq. I wonder why all the zookeeper Clients will receive a sync connected event after the ensemble recovers from the leader crash and just some zookeeper Clients will receive a sync connected event after the follower crash?\n\nWhen the leader crashes, the remaining followers will go into leader election and will drop the existing connections to clients. The idea there is that clients have a chance to go look for another server that is either leading or following rather than being stuck with a server that is looking for a leader. Consequently, a leader crash affects all clients. It is different when a follower crashes, since it only affects the clients that were connected to it. ",
+        "classification_result": {
+            "property": {
+                "confidence": 0.015415937639772892,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.00799979642033577,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.6247860193252563,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Patrick D. Hunt",
+        "comment": "bq. how does the shutdown hook conceal any exceptions due to corner cases which may occur\n\nIt's not really about that at all, it's not specifically exceptions that might occur during the shutdown hook.\n\nIt's more about ZK itself, overall, being robust to unexpected failures. Today without graceful shutdown we make every shutdown non-graceful. It's stressing the system every time we shut down rather than only stressing the system when an unexpected failure happens. This causes code which normally (with graceful shutdown) would only be tested in rare situations be tested more frequently. So whether it's the log recovery code, or the snapshot recovery code, or the communication between servers, we tend to stress these code paths more frequently as a result (granted it's not every time, because we might not be writing out a wal, etc... during process shutdown but hopefully you see it's more likely).",
+        "classification_result": {
+            "property": {
+                "confidence": 0.41592031717300415,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.0016898514004424214,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.6803420186042786,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Alexander Shraer",
+        "comment": "I think its actually worse - consider a reconfig changing just one client port, of one of the servers. All the other servers don't need to perform any operation besides updating the config in their memory, so they won't have any issue. The single server may object because it can't bind to the port, but the leader only needs a majority vote, so his objection may not arrive on time for the commit.\n\nI just want to point out that there is no voting in Paxos or ZooKeeper. Servers don't say no to the leader's proposals. Protocols in which servers can say no are distributed commit protocols (e.g., 2 phase commit, 3 phase commit, E3PC, etc.) but ZooKeeper solves consensus, in which servers don't have a Yes/No vote or veto powers.",
+        "classification_result": {
+            "property": {
+                "confidence": 0.04939757287502289,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.0019008974777534604,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.5913226008415222,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Whitney Sorenson",
+        "comment": "It is possible that I can provide a reproducible test case, though it would likely mean writing code which simply did the above operations endlessly. I wonder if someone more familiar with the relevant code might be able to make more sense of either the potential for this error or may be able to design a better test case?\n\nUnfortunately, it is not happening often: just once during a 6 month period (and another time from another user); I will check if I have relevant ZooKeeper logs, but probably not.\n\nThe ensemble size was 5, and I am not sure if connected to leader or follower.",
+        "classification_result": {
+            "property": {
+                "confidence": 0.05929719656705856,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.001990796998143196,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.6392378211021423,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Chris Nauroth",
+        "comment": "I assume this pattern was inspired by the Guava [{{VisibleForTesting}}|http://docs.guava-libraries.googlecode.com/git-history/release/javadoc/com/google/common/annotations/VisibleForTesting.html] annotation used in other projects like Hadoop.  I don't think there is anything wrong with the current pattern of using a {{// VisibleForTesting}} comment in the ZooKeeper code.  I don't have a better suggestion, so I'd be comfortable closing this as Won't Fix.  Maybe others have something else in mind?\n\nAlso, I recommend against introducing a Guava dependency, especially if it's just for this annotation.  Hadoop is currently stuck on an old version of Guava for backwards-compatibility reasons.  It has been a source of frustration for users that try to use a newer version of Guava in their Hadoop-based applications.  On the whole, the benefits of using the code in Guava have not out-weighed the dependency management problems.",
+        "classification_result": {
+            "property": {
+                "confidence": 0.0073475586250424385,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.6699607968330383,
+                "prediction": true
+            },
+            "existence": {
+                "confidence": 0.012797264382243156,
+                "prediction": false
+            }
+        },
+        "property": false,
+        "executive": true,
+        "existence": false
+    },
+    {
+        "author_display_name": "Flavio Paiva Junqueira",
+        "comment": "[~suda] I'd really like to have us using a different serialization framework, even if we do it ourselves. There are actually two issues with the current serialization for leader election. First, it is mixed the election code and I'd rather separate it out. Second, it is not using the same serialization as the other protocols (Zab, client-server). We should fix it, but it is enough work to be done as separate jira rather than a secondary task here. An important question is which framework to use, and every time we raise this issue, we have different opinion on what to use. It'd be great if we could agree this time around and have it finally done.",
+        "classification_result": {
+            "property": {
+                "confidence": 0.21056823432445526,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.008393544703722,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.9196274876594543,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Chris Nauroth",
+        "comment": "Hello [~piotr.a.chmielinski@intel.com].  ZOOKEEPER-2139 is a prior issue that tracks a feature enhancement to support running multiple SASL-secured ZooKeeper clients in one process, instead of a single one controlled by a Java system property.  I recommend watching that issue if you'd like to keep track of its progress.  I'm resolving this one as a duplicate.  (Please feel free to reopen if I misunderstood.)",
+        "classification_result": {
+            "property": {
+                "confidence": 0.03934319689869881,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.004546834621578455,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.5008313059806824,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Abhishek Rai",
+        "comment": "Thanks for your response [~fpj].  I think my claim about the \"diff\" being present in the snapshot and not in the log looks incorrect.  When pushing a diff, leader (LearnerHandler) pushes individual transactions which the follower writes to its log (Learner.syncWithLeader).  Leader eventually sends a \"NEWLEADER\", in response, the follower snapshots.  Ultimately, the diff is visible in both the log and snapshot.\n\nBut consider the case of leader (LearnerHandler) pushing a full snapshot to the follower.  In this case, the follower does not receive the individual transactions contributing to that snapshot.  In fact, it's not practical to do so - by design, the snapshot is sent when the diff is too large.  Thus, the follower can have a snapshot which reflects some transactions that are not present in the log.  After writing the snapshot, the follower continues writing subsequent transactions to the log.\n\nImagine a crash + recovery is induced at this point, such that the latest snapshot file is incomplete or non-existent.  The follower would try to load the preceding healthy snapshot, and replay the log since then.  Since the log does not contain some transactions corresponding to the missing snapshot file, the follower would never find out about them.  This would cause the inconsistency scenario I described above.\n\nWithout syncing the snapshot file (and its parent directory) to disk, we cannot guarantee that the snapshot file exists during recovery.  And the loss of finalized snapshot files can result in data loss since all transactions may not be present in the log.",
+        "classification_result": {
+            "property": {
+                "confidence": 0.01989130862057209,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.004185432102531195,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.5706866979598999,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Flavio Paiva Junqueira",
+        "comment": "bq. I will send a mail in the user/dev mailing list about this once agree upon the changes.\n\nI'd hold on to the e-mail until we converge on a proposal.\n\nbq. To make it clear, this jira is changing zookeeper server side configuration only. Now, with this change user need to mandatory configure the SSL scheme name \"x509\" along with the other SSL configurations. Earlier \"x509\" was instantiated by default, irrespective of secure or non-secure. So user not required to configure this explicitly. \n\nI got that and if we think that we will have other providers in the future, then we certainly need a way of configuring it.\n\nbq. The proposed change is similar to the way configuring the SASL auth mechanism.\n\nMore or less. For authentication, we need to specify the provider among IP, Digest/Passwd, SASL. In that case, we do need that parameter explicitly, and if I'm passing a SaslAuthProvider parameter, then it is pretty clear that I want SASL authentication. Passing a X509AuthenticationProvider parameter doesn't make it clear the intent of the user with respect to SSL and given that we only have one option at the moment, sounds unnecessary.\n\nbq. I failed to find any dependency with SASL\n\nif you check the stack trace in the description of this jira, then this provider issue has arisen with a call to fixupACL in prep request processor. The ACL stuff depends on the authentication to work, and actually, I should have said authentication in general rather than just SASL. It'd be good to test both SSL and SASL together.  \n\n",
+        "classification_result": {
+            "property": {
+                "confidence": 0.04466988891363144,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.0037807777989655733,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.6142476797103882,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Chris Nauroth",
+        "comment": "In the latest patch, I only see the new {{HeartbeatMonitor}} thread started in standalone mode, because it's coupled with {{ZooKeeperServerMain}}.  In the case of a full ensemble, {{QuorumPeerMain}} won't start the thread, because it won't call {{ZooKeeperServerMain}} (unless it's the degenerate case of a single-node ensemble).\n\nI've been trying to look for a way to solve this without adding another watchdog thread, but unfortunately I don't have another proposal to offer right now.",
+        "classification_result": {
+            "property": {
+                "confidence": 0.08181282132863998,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.005502062849700451,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.8185120224952698,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Ivan Kelly",
+        "comment": "That solaris build on jenkins hasn't passed in years. I don't think there are many places even using solaris now. Joyent is the only one I can think off offhand. Which is a pity. \n\nRegarding Mac OSX, when you support something, I take it to mean, this will work in production for you and if it doesn't thats a major bug. It doesn't mean it won't work. That said I've no problem with having Mac OSX on the list. It does get plenty of testing on Mac in any case.\n\nWindows, I think Huawei were using it on windows. Perhaps [~rakeshr] could enlighten us. ",
+        "classification_result": {
+            "property": {
+                "confidence": 0.013994845561683178,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.7455531358718872,
+                "prediction": true
+            },
+            "existence": {
+                "confidence": 0.01104100700467825,
+                "prediction": false
+            }
+        },
+        "property": false,
+        "executive": true,
+        "existence": false
+    },
+    {
+        "author_display_name": "Rakesh Radhakrishnan",
+        "comment": "AFAIK in production both servers and clients uses Unix based systems like SuSE, RedHat, CentOS etc and not using Windows environment. But for the development and testing purpose we use Windows environment and running both servers/clients there. I feel it is OK to mention {{development platform}} in the document like today we have. I remember few people queried in the [mailing list about the Windows support|http://qnalist.com/questions/4669709/windows-support-win-64]",
+        "classification_result": {
+            "property": {
+                "confidence": 0.005948756821453571,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.6870380640029907,
+                "prediction": true
+            },
+            "existence": {
+                "confidence": 0.034887902438640594,
+                "prediction": false
+            }
+        },
+        "property": false,
+        "executive": true,
+        "existence": false
+    },
+    {
+        "author_display_name": "Chris Nauroth",
+        "comment": "bq. Isn't zk support a prerequisite for hadoop on solaris?\n\nZooKeeper isn't strictly a requirement for Hadoop.  It becomes a requirement though if you want to run an HA deployment for some of the critical daemons like NameNode and ResourceManager.  Their HA architecture uses an active/standby pair coordinating on a distributed lock using ZooKeeper.  Realistic production deployments would want this functionality.",
+        "classification_result": {
+            "property": {
+                "confidence": 0.5782676339149475,
+                "prediction": true
+            },
+            "executive": {
+                "confidence": 0.32533687353134155,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.306671679019928,
+                "prediction": false
+            }
+        },
+        "property": true,
+        "executive": false,
+        "existence": false
+    },
+    {
+        "author_display_name": "Chris Nauroth",
+        "comment": "The ZooKeeper codebase at this point has multiple sub-components, and I wonder if the statement of support needs a more specific breakdown per component.\n\nAs Ivan pointed out, the main client and server pieces don't have any native code requirements.  I expect it isn't too much burden to support a wide variety of platforms for the client and server, as long as we stick to some rules in the Java code, like avoiding hard-coded file path separators.\n\nSupport gets a lot trickier for the native client.  In that case, we'd need a healthy base of contributors familiar with each platform and available to field bug reports.\n\nThen there is contrib, where it seems like contributors are sparse.  Some contrib modules like zkfuse contain native code, so they'll have the same challenges as the native client.\n\nBased on that, I wonder if we need something more like a matrix listing client/server/native client/etc. on one axis and OS on the other axis, and yes or no in each box.  Transitioning one of those boxes from no to yes ought to require some thought and agreement about whether or not the community is capable of taking on the extra support burden.  If not, then it might require recruiting some additional contributors to help before making the commitment.",
+        "classification_result": {
+            "property": {
+                "confidence": 0.023316675797104836,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.0035402739886194468,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.5758727192878723,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Powell Molleti",
+        "comment": "I agree with Markus here, I noticed this issue but assumed that there is no expectation perhaps to add to the HDR anymore with respect to this protocol version -65536L . Otherwise its best to do the following as Markus requested.\n\n{code:java}\ndout.writeLong(PROTOCOL_VERSION);\n\nString addr = self.getElectionAddress().getHostString() + \":\" + self.getElectionAddress().getPort();\nbyte[] addr_bytes = addr.getBytes();\n\n// After version write the total length of msg sent by sender.\ndout.writeInt(Long.BYTES + addr_bytes.length);   \n// Write sid afterwards\ndout.writeLong(self.getId());\n// Write length of host/port string                                   \ndout.writeInt(addr_bytes.length);\n// Write host/port string                       \ndout.write(addr_bytes);                                           \n{code}\n\nThis helps older revisions to ignore msg past host/port since it will read only what it understands and discard rest of the bytes.\n\nI have another proposal:\nOnce the RX side when a compatible peer sees new protocol version i.e -65536L it could reply with -65536L too (this wont happen with older peer since it will send notification with state, which cannot be -65536L) and both of them could negotiate in protobufs,  and this once and for all solving this issue.\n\nAlso I prefer both channels be symmetric with respect to header negotiation just like the data exchange which makes implementation of channels much easier.\n\nI am not quite sure if this can be done now that 3.5.1 is out there and Protocol version bump happened sometime ago in ZOOKEEPER-1633.",
+        "classification_result": {
+            "property": {
+                "confidence": 0.027708180248737335,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.008762075565755367,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.5635067820549011,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Powell Molleti",
+        "comment": "Markus I have come across the same issue and decided to implement this by sending the same notification. I am working on this as part of ZOOKEEPER-901, refer some of the discussions about this here ZOOKEEPER-1045. \n\nLet me know what you think about this idea?. I think this has the potential to solve the user level keep-alive implementation without the need to send new bits in hdr and/or the to introduce a new message for keep-alive.\n\nHowever this breaks the current FLE due to this code: http://bit.ly/1PdWY1D\n\n{code:title=FastLeaderElection.java|borderStyle=solid}\n// Verify if there is any change in the proposed leader\nwhile((n = recvqueue.poll(finalizeWait,\n                  TimeUnit.MILLISECONDS)) != null){\n    if(totalOrderPredicate(n.leader, n.zxid, n.peerEpoch,\n                     proposedLeader, proposedZxid, proposedEpoch)){\n        recvqueue.put(n);\n        break;\n    }\n}\n{code}\n\nI think this while loop is in error, if I am not mistaken, it should use a global clock limit how long to poll for rather than hoping no one is going send any messages with-in the finalizeWait time window. I am hoping to negotiate for a change here if the submitted patch is found to be reasonable. ",
+        "classification_result": {
+            "property": {
+                "confidence": 0.02197517454624176,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.004882181994616985,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.6177724003791809,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Markus Aalto",
+        "comment": "I think this might work, but I think it would still require change to allow different protocol version message to be accepted and skipped properly. With that change the the newer protocol version member could adapt to older version easily. \n\nRegarding https://issues.apache.org/jira/browse/ZOOKEEPER-901 I'm not seeing immediately how it will fix the issue unless proper keep-alive is implemented for both directions. We have been hitting some cases in our prod environment where one direction of the TCP/IP connection is working, but other is not working. This causes whole ZK cluster to fail when leader election starts. So the keep-alive would need to be monitored for both directions.\n",
+        "classification_result": {
+            "property": {
+                "confidence": 0.01754244975745678,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.004631349351257086,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.5732094645500183,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Rakesh Radhakrishnan",
+        "comment": "Thanks [~cnauroth] for the interest in introducing/contributing a new feature. Yes, {{checksum}} validation will be helpful to detect the transmission errors. I think there is a space to discuss this feature in detail and implementing here. At very high level I can think of performance aspect because this will have the additional overhead of CPU computation and I/O resources - network layer and disk persistence layer (as packet size will increase).\n\nIn this particular case [~brahmareddy] has mentioned that client {{sessionId}} has corrupted when the request reaches at the server and not the {{user data}}. By seeing this I still have doubt in my mind why both NN has transition to standby, but I couldn't find the reason what has happened to the ZooKeeper client due to the {{sessionId}} corruption. This question is actually not relevant to ZK project, I'm posting my doubt here because the discussions are revolving around ZK transmission errors. Probably I'll also try to look at the {{ActiveStandbyElector}} code and ZK code again.",
+        "classification_result": {
+            "property": {
+                "confidence": 0.21697597205638885,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.003957555163651705,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.8700392246246338,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Suhas Dantkale",
+        "comment": "Hi [~symat],\u00a0\r\n\r\nIs the zoo.cfg having 0.0.0.0 as it's own hostname representing as self in the server list of ensemble?\r\n\r\nI don't know if you are running into this issue. But just jotting down\u00a0 the analysis of problem I had faced with 0.0.0.0:->\r\nh3. How IP address 0.0.0.0 creates problem with ZK Leader Election protocol?\r\n\r\n->\r\n\r\n(1) When ZK server starts for the very first time, it sends out its _Initial Identification_ to its peers.\u00a0The zoo.cfg file has its peer\u2019s hostname and Election port info.\u00a0In its _Initial Identification_ represented by _class InitialMessage_ in the code, the ZK server sends out its sid and 0.0.0.0 as its identification.\r\n\r\n(2) When the peers receive and parse this Initial message, they understood it as coming from 0.0.0.0. The _handleConnection_ method below does receive and parse the message coming from its peer. It saves the identification of its peer into _electionAddr_ and _sid_.\r\n\r\n*The peer uses this identification to connect back to the ZK server on 0.0.0.0, if its own SID is greater than the SID of the originating node.* And before it establishes a new connection it, closes the existing connection to the originating node if there is any. (I believe it does that to increase the chances the node with higher SID to be the leader.)\r\n\r\n*(3) However, the 0.0.0.0:3888 is not its peer Address and actually it\u2019s its own address :)*\u00a0So the peer Server tries to connect to itself thinking that it\u2019s connecting to the originating node.\r\n\r\n-> What this leads to is that the originating node is never able to complete its Leader Election and therefore is never able to join the cluster.\r\n\r\nIf you change the order of the nodes to join the cluster in decreasing order of SIDs, this problem doesn't happen for the reasons described above.\r\n\r\n\u00a0\r\n\r\nWe had temporary solved this problem by not using 0.0.0.0 as the IP address of the self and instead of use the FQDN or the real IP address. Because in our setup, we don't have multiple network interfaces that we deal with.\r\n\r\n\u00a0However, I was planning to propose the below changes to the community:-\r\n\r\nIn point (2) above, while connecting back to the originating node, can peer look into its own zoo.cfg to get the real hostname or IP address to connect to originating node instead of relying on the IP address that comes in its Initial message. Since in its initial message, it also has the SID, so it can easily get the real identity of the originating node from its zoo.cfg file.\r\n\r\n\u00a0\r\n\r\nI don't know if the above points help you. But just thought of sharing them with you.\r\n\r\n\u00a0",
+        "classification_result": {
+            "property": {
+                "confidence": 0.03654110059142113,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.004459016490727663,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.7919803857803345,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Mohammad Arshad",
+        "comment": "Current patch supports only sasl related properties but I think It will be more appropriate to handle all the Client system properties . System properties are used at both client side as well as server side.There are some system properties which are common in bother client and server. Here is the detail.\n*Client specific system properties:*\n{noformat}\nzookeeper.sasl.client.username\nzookeeper.sasl.clientconfig\nzookeeper.sasl.client\nzookeeper.server.realm\nzookeeper.disableAutoWatchReset\nzookeeper.client.secure\nzookeeper.clientCnxnSocket\n{noformat}\n\n*Common Client and Server system properties*\n{noformat}\nzookeeper.ssl.keyStore.location\nzookeeper.ssl.keyStore.password\nzookeeper.ssl.trustStore.location\nzookeeper.ssl.trustStore.password\nzookeeper.ssl.authProvider\njute.maxbuffer\nzookeeper.kinit\nsun.security.jgss.native\njava.security.auth.login.config\njava.security.krb5.conf\n{noformat}\n\njava.security.auth.login.config and java.security.krb5.conf will remain system properties even after this patch as these are java API required system properties\n",
+        "classification_result": {
+            "property": {
+                "confidence": 0.008730032481253147,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.03287500888109207,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.6749629974365234,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Hongchao Deng",
+        "comment": "I just figured out a flaw in current design and would like to ask for help.\n\nThe current client will retry connecting if failed. This isn't desired in SSL case where user put wrong parameters and client would keep failing. There are a few options:\n\n1. the connection could failed over to normal unencrypted mode.\n2. client could die on knowing SSL exception.\n3. Server can failover to accepting any credentials.\n\nI'm not sure what's the right way to go, nor the technical details to implement it. Anyone can help here?",
+        "classification_result": {
+            "property": {
+                "confidence": 0.08647806197404861,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.003103368217125535,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.7835612893104553,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Ashish Amarnath",
+        "comment": "We have implemented SSL support in the Windows native client using Schannel with our internal PKI. \nThis feature has unit test coverage in our application unit tests and is also deployed and running in our test environment for a while now.\nCurrently, we are working on getting the Zookeeper native unit tests to first build and run on Windows. \nAfter that is done we also plan to add unit tests to exercise this SSL implementation using Windows certificates.",
+        "classification_result": {
+            "property": {
+                "confidence": 0.004118946380913258,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.5920085310935974,
+                "prediction": true
+            },
+            "existence": {
+                "confidence": 0.03717193379998207,
+                "prediction": false
+            }
+        },
+        "property": false,
+        "executive": true,
+        "existence": false
+    },
+    {
+        "author_display_name": "shuoshi",
+        "comment": "I'd like to add openssl into zk's c client to support linux and macos, since [~asamarna] seems already support windows, I think it's better to make my code for non win32 platform only.\r\n\r\n\u00a0\r\n\r\nI've upload my simple ssl c client connect to zookeeper [here|https://gist.github.com/roodkcab/cbd71a81897f592a4109b30923dface4]\r\n\r\nI also make a script to create cert files [here|https://gist.github.com/roodkcab/80e0b11e4602462070dc4313e8f30872]",
+        "classification_result": {
+            "property": {
+                "confidence": 0.014813209883868694,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.8142868876457214,
+                "prediction": true
+            },
+            "existence": {
+                "confidence": 0.22994334995746613,
+                "prediction": false
+            }
+        },
+        "property": false,
+        "executive": true,
+        "existence": false
+    },
+    {
+        "author_display_name": "Michael Han",
+        "comment": "Getting back on this issue. I have another perspective - rather than synchronizing on entire QuorumPeer we could use fine grained locks to specifically guard the set of states affiliated with QuorumVerifier, namely:\n* Quorum verifier.\n* Last seen quorum verifier.\n* Some additional fields that appertain to QV and last QV, such as quorum address, election port, and client address.\n\nAs for what to guard, I feel guard on individual fields (QV, last QV, quorum address, etc) is enough after examining the code paths and call graphs - if I am wrong, then we will need to figure out a compound state and invent a new class that encapsulates all these states. Also we should make sure that every access to these states will be guarded by the same lock. \n\nbq. But this update would have to synchronize on both QP and QCM, so not sure if the same problem exists as above.\nI feel the same way - this solution just moves the lock around =).\n\nbq. Do we need to update all view listeners in a critical section?\nI think yes, if we want to maintain a global consistent view of the QV states. When the value of QV in QP is updated, QP needs to fire events to notify subscribers of such change, and without locking when the event hits subscriber the view of the world might already changed. We might also need locking on the event callbacks of each listener, to avoid any potential race condition of each listener. But this case the likely hood of running into race / dead lock sounds lower as we are not synchronizing on a single QP anymore.\n\nIn any cases, I feel refactoring the QuorumPeer to use fine grained locking is necessary. Attaching a patch to express my idea.",
+        "classification_result": {
+            "property": {
+                "confidence": 0.09147875010967255,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.0050147478468716145,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.8848415613174438,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Hongchao Deng",
+        "comment": "Hi [~fpj].\n\nAre you still interested in Netty + SSL? I am wondering if adding Netty to replace socket IO seems a cautious action to make, maybe we shouldn't do it in this layer. We should add a HTTP proxy layer on top of both server and observer which is also easy to implement SSL :>\n\nLet me know your thoughts. At the mean time, I am working with Thawan for ZOOKEEPER-1549. It would be great if you can follow up there and provide insights.",
+        "classification_result": {
+            "property": {
+                "confidence": 0.10046487301588058,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.767960250377655,
+                "prediction": true
+            },
+            "existence": {
+                "confidence": 0.028740203008055687,
+                "prediction": false
+            }
+        },
+        "property": false,
+        "executive": true,
+        "existence": false
+    },
+    {
+        "author_display_name": "Hongchao Deng",
+        "comment": "[~kfirlevari]. Thanks for sharing this novel idea.\nI have some questions. Can you help clarify?\n\n{quote}\nThe main idea is to separate sessions that inherently need to stall in order to enforce order semantics, from ones that do not need to stall. To this end, we add data structures for buffering and managing pending requests of stalled sessions; these requests are moved out of the critical path to these data structures, allowing continued processing of unaffected sessions. \n{quote}\nThere seems to be two kinds separation: 1. sessions unaffected from each other and 2. requests in one session unaffected from each other. Right?\nAnother question, why does it need to buffer \"pending requests of stalled sessions\"? More specifically, why on server not client side? I assumed you were meaning the second type of separation.\n\n{quote}\nThis occurs due to a bug fix (https://issues.apache.org/jira/browse/ZOOKEEPER-1505) that forces processing of local read requests before handling any committed write.\nIn order to avoid starvation, our solution prioritizes committed write requests over reads, and enforces fairness among read requests of sessions.\n{quote}\nThis sounds like a bug. We shouldn't give any preference to either read or write. A user should configure on client side to tackle the need of either heavy write or heavy read. Right?",
+        "classification_result": {
+            "property": {
+                "confidence": 0.2559397518634796,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.004732859320938587,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.9307962656021118,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Hongchao Deng",
+        "comment": "[~kfirlevari]\n\nbq. During that period, the session of that request is stalled, but the other sessions might have requests that do not need to be committed, and therefore can be processed.\n\nAgreed with this point. It would be nice to be fixed/improved ASAP.\n\nbq. To this end, we add data structures for buffering and managing pending requests of stalled sessions\n\nThis is my questioned point. It seems to put more load on server and potentially limit scalability. And I doubt if this is necessary. For example, as you mentioned:\n\nbq. this severely hampers performance as it does not allow read-only sessions to proceed at faster speed than read-write ones.\n\nread requests could be processed directly. Why does it need to buffer other sessions' write requests? So IMO, a buffer-less method seems the best way to handle separate sessions, right?\n\n",
+        "classification_result": {
+            "property": {
+                "confidence": 0.9288386106491089,
+                "prediction": true
+            },
+            "executive": {
+                "confidence": 0.00403898861259222,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.40606483817100525,
+                "prediction": false
+            }
+        },
+        "property": true,
+        "executive": false,
+        "existence": false
+    },
+    {
+        "author_display_name": "Alexander Shraer",
+        "comment": "Your suggestion is much more different from the current implementation than Kfir's patch. But I also suspect that blocking on the client side would have a performance impact - imagine a bunch of reads blocked by a write on a client - we could have processed the reads immediately after the commit of the write reached the local server, instead the client will first need to get the commit and only then send the reads to the local server, so this is added latency for all those reads. I suspect that by not keeping the server's pipeline full this method would also have a significant impact on throughput...",
+        "classification_result": {
+            "property": {
+                "confidence": 0.8392317295074463,
+                "prediction": true
+            },
+            "executive": {
+                "confidence": 0.019645247608423233,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.0990687757730484,
+                "prediction": false
+            }
+        },
+        "property": true,
+        "executive": false,
+        "existence": false
+    },
+    {
+        "author_display_name": "Hongchao Deng",
+        "comment": "bq. imagine a bunch of reads blocked by a write on a client ...\n\nA technique I can think of on client side is buffering all requests and then multiplexing those requests into multiple sessions to achieve non-blocking.\n\nNonetheless my point isn't about how to handle heavy read traffic. It is about putting the load on client side as much as possible instead of server side to achieve scalability. This sounds like throughput tuning for user optimized activity -- If a user know it is heavy read and there would be non conflicted requests, should he just create different sessions for those requests to achieve non-blocking? If ZK can help users to take care of it, my intuition goes directly to client side. Right?",
+        "classification_result": {
+            "property": {
+                "confidence": 0.958966076374054,
+                "prediction": true
+            },
+            "executive": {
+                "confidence": 0.004278602544218302,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.5915803909301758,
+                "prediction": true
+            }
+        },
+        "property": true,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Alexander Shraer",
+        "comment": "I see. Well, ZK provides guarantees per-session, so you won't have any guarantees across sessions. Which may be fine if the operations are really independent. \n\nBut I think your intuition makes sense. Instead of multiple sessions (where you loose all semantics) one could specify relaxed per-operation or per session semantics. I've actually suggested this in the past here: http://wiki.apache.org/hadoop/ZooKeeper/MountRemoteZookeeper\n\nThe specific ZK property that requires blocking reads after writes of the same session is prefix/fifo of client requests. So even if the requests are concurrent (i.e., one didn't complete before the other started) ZK guarantees that they will complete in invocation order and that if one fails, the ones invoked after it will fail too. \n\nIIRC the feedback I got was that users expect this fifo property (its reflects program order) and relaxing it may not be a good idea. But personally I still think that this can be a good optional feature (either per operation or per session).\nFor example, a client's program:\n\nwrite(v, 1) is invoked\nwrite(v, 1) completes\nwrite(v, 2) is invoked\nread(v) is invoked\n\ncurrently c must return 2. but perhaps the user could say read(v, \"I want sequential consistency without fifo\")\nwhich could return either 1 or 2.  This could improve the throughput further. In any case, something like this is probably out of scope for Kfir's proposal but with Kfir's patch in place it would probably be easier to add in the future.\n\n",
+        "classification_result": {
+            "property": {
+                "confidence": 0.12933985888957977,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.003982572816312313,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.8839929103851318,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Hongchao Deng",
+        "comment": "Okay. I am feeling more clear what I wanna say. Let me summarize it.\n\nh3. Stalling\n\nI totally agree that unaffected requests should not block each other. But this seems to be specific user activity optimizations. Even if user doesn't wanna handle it, we can still handle in client code. So why do buffering on server side. The server approach means more workload on server side and limits scalability.\n\nh3. Starvation\n\nI think it's good to provide options to enable read or write preferred ordering with a default one being sequential (no preference).\n\nSince this is [~kfirlevari] proposal, could you clarify the tradeoff / motivation to push it on server side? And welcome to ask me questions if anything confusing I made.",
+        "classification_result": {
+            "property": {
+                "confidence": 0.6850733160972595,
+                "prediction": true
+            },
+            "executive": {
+                "confidence": 0.0017524742288514972,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.4178066849708557,
+                "prediction": false
+            }
+        },
+        "property": true,
+        "executive": false,
+        "existence": false
+    },
+    {
+        "author_display_name": "Kfir Lev-Ari",
+        "comment": "[~fpj], thanks for pushing for the latency numbers, they turned out to be quite good and I already had it in the logs. I've updated in the evaluation document the throughput graphs - now they contain latency data for each scenario. Its not the most elegant way to present it, but here is the summary.\n\nAs expected, the latency in read-only workload is equivalent in both algorithms, as well as in write-only workloads.\nThe new algorithm significantly reduces read and write latency in mixed workloads in which the write percentage is below 30 (for reads up to 96% improvement, for writes up to 89%).\nIn cases of mixed workload in which the R/W clients have write intensive workload (of 100%-70%) the latency of the RO is reduced due to the starvation problem in the original algorithm (up to -184% reduction). I.e., the readers in the original algorithm have lower latency, but they read older values and postpone the update of the local DB by remote writes. See the median latency in the 3 servers scenario, 50% R/W Clients, 50% RO Clients, 0% reads column.\n",
+        "classification_result": {
+            "property": {
+                "confidence": 0.8442582488059998,
+                "prediction": true
+            },
+            "executive": {
+                "confidence": 0.010058886371552944,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.05443985387682915,
+                "prediction": false
+            }
+        },
+        "property": true,
+        "executive": false,
+        "existence": false
+    },
+    {
+        "author_display_name": "Alexander Shraer",
+        "comment": "Kfir, I like what this patch is adding - flexibility of defining different types of clients, measuring latency under load, and the new reporting format.\n\nHowever, I'd rather we use some existing histogram library if possible and avoid pre-defining bucket boundaries, doing binary search to find the right bucket to increment, and throwing away unexpectedly high latencies (if I understood correctly). \n\nthis is perhaps a question for [~phunt] or [~fpj] - instead of implementing histograms as part of this patch,\nperhaps we can use something existing, like this: https://github.com/flaptor/hist4j/blob/master/Hist4jExample.java\nas a dependence for fatjar, or maybe you can suggest something else.\n\n",
+        "classification_result": {
+            "property": {
+                "confidence": 0.03811349719762802,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.04114804044365883,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.7668955326080322,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Hongchao Deng",
+        "comment": "Just to clarify, this issue contains two parts:\n1. Backup static config. It happens twice \n{quote}\nonce when removing the ensemble definitions, at which point a dynamic file doesn't exist yet, and once when removing clientPort information\n{quote}\n\n2. Backup dynamic file. It happens when a new dynamic is created on reconfig.\n\n[~shralex]\nYour options are applied to dynamic files. I think it also applies to static files. I prefer sequence number (we can save the zxid in file).\n\nOne questions: where should those backup stay? What about creating a new directory in \"data/\"?",
+        "classification_result": {
+            "property": {
+                "confidence": 0.02175508253276348,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.004074599593877792,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.662229597568512,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Alexander Shraer",
+        "comment": "For the static file - it is sufficient to back it up only once - only when configBackwardCompatibilityMode is on. \n\nAs for the dynamic file, here are my reasons for preferring solution #2:\n1. When backing up a dynamic config we have to write down the version in the backup file anyway. \n2. Numbering the backups using versions will make backups easy to correlate across different replicas. Whereas it is not clear that bak2 on one machine is for the same thing as bak2 on another (unless you look inside and check the version).\n3. If the version is written in a separate file, it will be difficult to maintain consistency between the version file and the dynamic configuration file. Consider updating one of them but not the other and having a failure in between.\nWith approach #2 changing files when the configuration fails is really straightforward.\n\nWe don't have to move the old config file - it will just stay in the configuration directory where the user is likely to look for configuration files.\n\n\n\n",
+        "classification_result": {
+            "property": {
+                "confidence": 0.19768565893173218,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.006680050399154425,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.9553853869438171,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Hongchao Deng",
+        "comment": "I rethought the version thing a bit more.\nIt seems to me too hackish to parse the \"version\" number from filename.\nMy original proposal was to have some sort of backup with a history view. The reason I suggest separating version out is that I am concerned when users copy dynamic files around and boot it up, they didn't realize the version inside is important. I was suggesting to separate version apart to another related file, and if a dynamic file doesn't have any version related to it, it is version 0.\n\nI don't know where to go here. As a compromise to what we have done so far, I would like to keep \"version\" still in dynamic file and everything is still what [~shralex] suggested:\n1. have version appended to filename (not parsed from filename)\n2. update static config to point to new dynamic file.\n",
+        "classification_result": {
+            "property": {
+                "confidence": 0.13079038262367249,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.002706970786675811,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.8359982371330261,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Alexander Shraer",
+        "comment": "Hi Hongchao, I think we should stick with the design we discussed previously. Its always possible to improve later but I think this is a pretty good option. \n\nHaving the version in the file itself in addition to the filename has the disadvantage we have now - there is a configuration parameter the user mustn't touch otherwise the system will break, but nevertheless its very easy for the user to mistakenly change it. Having it just in the filename makes it more difficult to mistakenly change.\n\nAgain - there may be a more elegant solution but currently I don't see it. \n\nBTW, when you write the dynamic file you don't need to parse the filename - you know the up-to-date version from the quorumVerifier you have in memory. You only need to parse it on server boot.\n",
+        "classification_result": {
+            "property": {
+                "confidence": 0.12506826221942902,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.004150839988142252,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.8869386315345764,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Hongchao Deng",
+        "comment": "[~shralex]\nCould you give more details about your method? I will try to make it work.\n\n{quote}\nSilently prioritizing the dynamic port and removing the conflicting static port to solve the inconsistency may be a surprise to the user.\n{quote}\n\nAs we discussed before, what happened in reconfig client port is that if there is client port in static file, it is gonna remove that one from static file too. But my worry is that this requires much consideration on consistency in removing the line and updating the dynamic file.\n\nSo my plan is that:\n1. Keep the client port on fresh boot for backward compatibility.\nThen what happens if the server reconfig itself client port? Well, I plan for two tasks, where the second task is gonna replace the first one finally.\n2.1 Since it will updates the client port in dynamic file, making a preference on dynamic file over static file is a hackish way to finish it. Not delete/remove here. This would be quick and make out a release. This is part of ZOOKEEPRE-1993\n2.2 (This one is difficult and I need more time to get through the code.) Basically, on reconfiguring the client port on itself, it should safely remove the client port, update the dynamic file. This is part of ZOOKEEPRE-1995\n\nDoes that make sense? Please let me know what you think might be proper solution.",
+        "classification_result": {
+            "property": {
+                "confidence": 0.10506854951381683,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.002711197594180703,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.8329041600227356,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Hongchao Deng",
+        "comment": "hey [~shralex]. Thanks for sharing. Preserving backward compatibility definitely makes the project harder to maintain. However, it encourages people to try 3.5.x without being stopped at the start. So it's good to support that :)\n\nMoreover, I am wondering what the version in dynamic file is? Is it helping to locate the reconfig command more quickly? Or just a notion of version..\n\nI thought about the dynamic file again carefully and had a second thought on this:\nhttps://medium.com/@hdeng/zookeeper-dynamic-config-file-b7557a2fb42f\n\nBasically, I am suggesting:\n1. separate the version (zxid) to another files.\n2. Append a sequential number to the filename in backup.\n3. backup should be an optional argument (e.g. a directory maybe?). This would be nice to separate production and testing environment.\n\nPlease take a moment to review the ideas and share your feedback here.",
+        "classification_result": {
+            "property": {
+                "confidence": 0.2357793152332306,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.002512212609872222,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.8212094306945801,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Alexander Shraer",
+        "comment": "Configurations are ordered using their version numbers. This is how we can compare two configs and determine which one is older. Initially when you start up a cluster or a new server is joining its file doesn't have to include a version. In fact the user should NEVER specify a version. When a leader comes up, if the config wasn't set yet it sets it to its new zxid, and all config files are updated. If a new config is proposed, its version is the reconfig op zxid. \n\nStoring the version in a separate file creates a problem of keeping this file in sync with the dynamic config file. How would one update them atomically? I like your idea of making the version part of the filename. This means however that we'd need to update the static config file every time too, as it has a link to the dynamic file. But the good thing is that we may not need the bak files - we can just leave the old dynamic config files. \n\nI'm not sure whether this should be done for 3.5.0 or perhaps later.\n\n\n\n",
+        "classification_result": {
+            "property": {
+                "confidence": 0.02517121098935604,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.007701683323830366,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.7944478988647461,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Hongchao Deng",
+        "comment": "A few programming improvement suggestion:\n\nh3. getting all the children\n\n{code}\n        for (int i = 0; i < allChildren.size(); i++) {\n            current = allChildren.get(i);\n            children = zk.getChildren(current, false);\n            addParent(current, children, allChildren);\n        }\n{code}\n\nAdding more items to _allChildren_ while looping it doesn't look a good way... I would suggest a recursive get would work. A future envision is that ZK core lib supports parallelized efficient recursive operations like get, delete.\n\nh3. Path join\nAdd a path join abstraction instead of \"+\".\nA way to work around this:\n    http://stackoverflow.com/questions/412380/combine-paths-in-java/412495#412495\n\nh3. List join\nWell.. A list join abstraction would make the code looks cleaner..\n   https://code.google.com/p/guava-libraries/wiki/StringsExplained\n\nHope we could include [Guava|https://code.google.com/p/guava-libraries]. But it would be nice to define and use such abstraction in the code.\n\n",
+        "classification_result": {
+            "property": {
+                "confidence": 0.6198103427886963,
+                "prediction": true
+            },
+            "executive": {
+                "confidence": 0.007270418107509613,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.3747399151325226,
+                "prediction": false
+            }
+        },
+        "property": true,
+        "executive": false,
+        "existence": false
+    },
+    {
+        "author_display_name": "Michael Han",
+        "comment": "+1 on the idea of reusing existing code.\n\nHowever, {{listSubTreeBFS}} would buffer entire tree starting from the pathRoot passed in, so it's likely running into memory issues for large snapshot. I think what's mentioned earlier by Enis would work, and it preserves both the order properties (we buffer children of each node while doing dfs), and the memory constraint (we don't buffer all nodes, and we increase depth iteratively after each layer is printed.). This technique is formally known as [Iterative deepening depth-first search|https://en.wikipedia.org/wiki/Iterative_deepening_depth-first_search]. We could either update {{listSubTreeBFS}} or add a ID dfs version of same function in ZKUtil and use that instead.",
+        "classification_result": {
+            "property": {
+                "confidence": 0.060467369854450226,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.0033339825458824635,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.8431351184844971,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    },
+    {
+        "author_display_name": "Orion Hodson",
+        "comment": "Thanks [~phunt] for creating a separate ticket for this. \n\nThe patch adds a separate solution and project files for VS2013 and keeps the existing VS2008 ones. It has support for x86 and x64 platforms. It should build with the free version of Visual Studio 2013 Express for Desktop:\n\nhttp://www.visualstudio.com/en-us/products/visual-studio-express-vs.aspx\n\nThe added solution and project files should also work with VS2012 - replace the string v120 with v110 in the project files so appropriate build dependencies are picked up.\n",
+        "classification_result": {
+            "property": {
+                "confidence": 0.018448060378432274,
+                "prediction": false
+            },
+            "executive": {
+                "confidence": 0.006326987873762846,
+                "prediction": false
+            },
+            "existence": {
+                "confidence": 0.7443100810050964,
+                "prediction": true
+            }
+        },
+        "property": false,
+        "executive": false,
+        "existence": true
+    }
+]

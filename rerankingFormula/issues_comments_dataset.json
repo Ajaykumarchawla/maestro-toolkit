@@ -1,0 +1,662 @@
+{
+  "issues": [
+    {
+      "issue_id": 1,
+      "s_norm": 0.3,
+      "exe": 0.4,
+      "prop": 0.3,
+      "ext": 0.4,
+      "description": "Low hit score, low confidence in all categories."
+    },
+    {
+      "issue_id": 2,
+      "s_norm": 0.6,
+      "exe": 0.5,
+      "prop": 0.6,
+      "ext": 0.5,
+      "description": "Moderate hit score, average confidence."
+    },
+    {
+      "issue_id": 3,
+      "s_norm": 0.9,
+      "exe": 0.8,
+      "prop": 0.7,
+      "ext": 0.9,
+      "description": "High hit score, high confidence in all categories."
+    },
+    {
+      "issue_id": 4,
+      "s_norm": 0.6,
+      "exe": 0.8,
+      "prop": 0.4,
+      "ext": 0.6,
+      "description": "Moderate hit score, mixed confidence levels."
+    },
+    {
+      "issue_id": 5,
+      "s_norm": 0.3,
+      "exe": 0.6,
+      "prop": 0.6,
+      "ext": 0.3,
+      "description": "Low hit score, average confidence but low existence."
+    },
+    {
+      "issue_id": 6,
+      "s_norm": 0.9,
+      "exe": 0.4,
+      "prop": 0.5,
+      "ext": 0.9,
+      "description": "High hit score, varying confidence levels."
+    },
+    {
+      "issue_id": 7,
+      "s_norm": 0.2,
+      "exe": 0.9,
+      "prop": 0.8,
+      "ext": 0.2,
+      "description": "Low hit score, high confidence in executive and property."
+    },
+    {
+      "issue_id": 8,
+      "s_norm": 0.5,
+      "exe": 0.4,
+      "prop": 0.8,
+      "ext": 0.6,
+      "description": "Moderate hit score, mixed confidence levels."
+    },
+    {
+      "issue_id": 9,
+      "s_norm": 0.8,
+      "exe": 0.3,
+      "prop": 0.4,
+      "ext": 0.8,
+      "description": "High hit score, low confidence in executive and property."
+    },
+    {
+      "issue_id": 10,
+      "s_norm": 0.2,
+      "exe": 0.5,
+      "prop": 0.5,
+      "ext": 0.2,
+      "description": "Low hit score, average confidence."
+    },
+    {
+      "issue_id": 11,
+      "s_norm": 0.8,
+      "exe": 0.7,
+      "prop": 0.6,
+      "ext": 0.8,
+      "description": "High hit score, strong in executive and existence."
+    },
+    {
+      "issue_id": 12,
+      "s_norm": 0.5,
+      "exe": 0.6,
+      "prop": 0.3,
+      "ext": 0.5,
+      "description": "Moderate hit score, low property confidence."
+    },
+    {
+      "issue_id": 13,
+      "s_norm": 0.3,
+      "exe": 0.3,
+      "prop": 0.7,
+      "ext": 0.3,
+      "description": "Low hit score, high property confidence."
+    },
+    {
+      "issue_id": 14,
+      "s_norm": 0.9,
+      "exe": 0.5,
+      "prop": 0.7,
+      "ext": 0.9,
+      "description": "High hit score, balanced confidences."
+    },
+    {
+      "issue_id": 15,
+      "s_norm": 0.6,
+      "exe": 0.6,
+      "prop": 0.6,
+      "ext": 0.6,
+      "description": "Moderate hit score, balanced confidences."
+    },
+    {
+      "issue_id": 16,
+      "s_norm": 0.4,
+      "exe": 0.8,
+      "prop": 0.4,
+      "ext": 0.4,
+      "description": "Low hit score, high executive confidence."
+    },
+    {
+      "issue_id": 17,
+      "s_norm": 0.9,
+      "exe": 0.9,
+      "prop": 0.9,
+      "ext": 0.9,
+      "description": "High hit score, high confidence across the board."
+    },
+    {
+      "issue_id": 18,
+      "s_norm": 0.7,
+      "exe": 0.6,
+      "prop": 0.7,
+      "ext": 0.7,
+      "description": "Moderate hit score, strong in property."
+    },
+    {
+      "issue_id": 19,
+      "s_norm": 0.2,
+      "exe": 0.3,
+      "prop": 0.3,
+      "ext": 0.2,
+      "description": "Low hit score, low confidence across the board."
+    },
+    {
+      "issue_id": 20,
+      "s_norm": 0.6,
+      "exe": 0.7,
+      "prop": 0.5,
+      "ext": 0.4,
+      "description": "Moderate hit score, strong in executive."
+    }
+  ],
+  "comments": [
+    {
+      "comment_id": 1,
+      "issue_id": 1,
+      "exe_conf": 0.4,
+      "prop_conf": 0.3,
+      "ext_conf": 0.3,
+      "description": "Single comment, low confidence in all categories."
+    },
+    {
+      "comment_id": 2,
+      "issue_id": 2,
+      "exe_conf": 0.5,
+      "prop_conf": 0.6,
+      "ext_conf": 0.6,
+      "description": "Few comments, moderate confidence."
+    },
+    {
+      "comment_id": 3,
+      "issue_id": 2,
+      "exe_conf": 0.6,
+      "prop_conf": 0.6,
+      "ext_conf": 0.6,
+      "description": "Another comment, moderate confidence."
+    },
+    {
+      "comment_id": 4,
+      "issue_id": 3,
+      "exe_conf": 0.8,
+      "prop_conf": 0.8,
+      "ext_conf": 0.8,
+      "description": "Several comments, high confidence in all categories."
+    },
+    {
+      "comment_id": 5,
+      "issue_id": 3,
+      "exe_conf": 0.8,
+      "prop_conf": 0.8,
+      "ext_conf": 0.8,
+      "description": "High confidence, consistent with the issue."
+    },
+    {
+      "comment_id": 6,
+      "issue_id": 3,
+      "exe_conf": 0.8,
+      "prop_conf": 0.8,
+      "ext_conf": 0.8,
+      "description": "High confidence, consistent with the issue."
+    },
+    {
+      "comment_id": 7,
+      "issue_id": 3,
+      "exe_conf": 0.8,
+      "prop_conf": 0.8,
+      "ext_conf": 0.8,
+      "description": "High confidence, consistent with the issue."
+    },
+    {
+      "comment_id": 8,
+      "issue_id": 3,
+      "exe_conf": 0.8,
+      "prop_conf": 0.8,
+      "ext_conf": 0.8,
+      "description": "High confidence, consistent with the issue."
+    },
+    {
+      "comment_id": 9,
+      "issue_id": 4,
+      "exe_conf": 0.7,
+      "prop_conf": 0.4,
+      "ext_conf": 0.6,
+      "description": "Average comment count, mixed confidence levels."
+    },
+    {
+      "comment_id": 10,
+      "issue_id": 4,
+      "exe_conf": 0.7,
+      "prop_conf": 0.4,
+      "ext_conf": 0.6,
+      "description": "Similar confidence, consistent with issue."
+    },
+    {
+      "comment_id": 11,
+      "issue_id": 4,
+      "exe_conf": 0.7,
+      "prop_conf": 0.4,
+      "ext_conf": 0.6,
+      "description": "Similar confidence, consistent with issue."
+    },
+    {
+      "comment_id": 12,
+      "issue_id": 5,
+      "exe_conf": 0.6,
+      "prop_conf": 0.5,
+      "ext_conf": 0.4,
+      "description": "Few comments, moderate executive, low property."
+    },
+    {
+      "comment_id": 13,
+      "issue_id": 5,
+      "exe_conf": 0.6,
+      "prop_conf": 0.4,
+      "ext_conf": 0.4,
+      "description": "Another comment, moderate confidence in executive."
+    },
+    {
+      "comment_id": 14,
+      "issue_id": 6,
+      "exe_conf": 0.3,
+      "prop_conf": 0.5,
+      "ext_conf": 0.8,
+      "description": "Several comments, mixed confidence, low executive."
+    },
+    {
+      "comment_id": 15,
+      "issue_id": 6,
+      "exe_conf": 0.3,
+      "prop_conf": 0.5,
+      "ext_conf": 0.8,
+      "description": "Similar confidence, consistent with issue."
+    },
+    {
+      "comment_id": 16,
+      "issue_id": 6,
+      "exe_conf": 0.3,
+      "prop_conf": 0.5,
+      "ext_conf": 0.8,
+      "description": "Similar confidence, consistent with issue."
+    },
+    {
+      "comment_id": 17,
+      "issue_id": 6,
+      "exe_conf": 0.3,
+      "prop_conf": 0.5,
+      "ext_conf": 0.8,
+      "description": "Similar confidence, consistent with issue."
+    },
+    {
+      "comment_id": 18,
+      "issue_id": 7,
+      "exe_conf": 0.9,
+      "prop_conf": 0.9,
+      "ext_conf": 0.4,
+      "description": "Average comment count, high confidence in executive/property."
+    },
+    {
+      "comment_id": 19,
+      "issue_id": 7,
+      "exe_conf": 0.9,
+      "prop_conf": 0.9,
+      "ext_conf": 0.4,
+      "description": "Similar confidence, consistent with issue."
+    },
+    {
+      "comment_id": 20,
+      "issue_id": 7,
+      "exe_conf": 0.9,
+      "prop_conf": 0.9,
+      "ext_conf": 0.4,
+      "description": "Similar confidence, consistent with issue."
+    },
+    {
+      "comment_id": 21,
+      "issue_id": 8,
+      "exe_conf": 0.3,
+      "prop_conf": 0.7,
+      "ext_conf": 0.5,
+      "description": "Average comment count, mixed confidence levels."
+    },
+    {
+      "comment_id": 22,
+      "issue_id": 8,
+      "exe_conf": 0.3,
+      "prop_conf": 0.7,
+      "ext_conf": 0.5,
+      "description": "Similar confidence, consistent with issue."
+    },
+    {
+      "comment_id": 23,
+      "issue_id": 8,
+      "exe_conf": 0.3,
+      "prop_conf": 0.7,
+      "ext_conf": 0.5,
+      "description": "Similar confidence, consistent with issue."
+    },
+    {
+      "comment_id": 24,
+      "issue_id": 9,
+      "exe_conf": 0.4,
+      "prop_conf": 0.3,
+      "ext_conf": 0.8,
+      "description": "Few comments, low executive and property, high existence."
+    },
+    {
+      "comment_id": 25,
+      "issue_id": 9,
+      "exe_conf": 0.4,
+      "prop_conf": 0.3,
+      "ext_conf": 0.8,
+      "description": "Similar confidence, consistent with issue."
+    },
+    {
+      "comment_id": 26,
+      "issue_id": 10,
+      "exe_conf": 0.6,
+      "prop_conf": 0.5,
+      "ext_conf": 0.3,
+      "description": "Few comments, moderate executive and property."
+    },
+    {
+      "comment_id": 27,
+      "issue_id": 10,
+      "exe_conf": 0.6,
+      "prop_conf": 0.5,
+      "ext_conf": 0.3,
+      "description": "Similar confidence, consistent with issue."
+    },
+    {
+      "comment_id": 28,
+      "issue_id": 11,
+      "exe_conf": 0.8,
+      "prop_conf": 0.6,
+      "ext_conf": 0.8,
+      "description": "Several comments, high executive and existence."
+    },
+    {
+      "comment_id": 29,
+      "issue_id": 11,
+      "exe_conf": 0.8,
+      "prop_conf": 0.6,
+      "ext_conf": 0.8,
+      "description": "Similar confidence, consistent with issue."
+    },
+    {
+      "comment_id": 30,
+      "issue_id": 11,
+      "exe_conf": 0.8,
+      "prop_conf": 0.6,
+      "ext_conf": 0.8,
+      "description": "Similar confidence, consistent with issue."
+    },
+    {
+      "comment_id": 31,
+      "issue_id": 11,
+      "exe_conf": 0.8,
+      "prop_conf": 0.6,
+      "ext_conf": 0.8,
+      "description": "Similar confidence, consistent with issue."
+    },
+    {
+      "comment_id": 32,
+      "issue_id": 11,
+      "exe_conf": 0.8,
+      "prop_conf": 0.6,
+      "ext_conf": 0.8,
+      "description": "Similar confidence, consistent with issue."
+    },
+    {
+      "comment_id": 33,
+      "issue_id": 12,
+      "exe_conf": 0.6,
+      "prop_conf": 0.4,
+      "ext_conf": 0.5,
+      "description": "Average comment count, low property confidence."
+    },
+    {
+      "comment_id": 34,
+      "issue_id": 12,
+      "exe_conf": 0.6,
+      "prop_conf": 0.4,
+      "ext_conf": 0.5,
+      "description": "Similar confidence, consistent with issue."
+    },
+    {
+      "comment_id": 35,
+      "issue_id": 12,
+      "exe_conf": 0.6,
+      "prop_conf": 0.4,
+      "ext_conf": 0.5,
+      "description": "Similar confidence, consistent with issue."
+    },
+    {
+      "comment_id": 36,
+      "issue_id": 12,
+      "exe_conf": 0.6,
+      "prop_conf": 0.4,
+      "ext_conf": 0.5,
+      "description": "Similar confidence, consistent with issue."
+    },
+    {
+      "comment_id": 37,
+      "issue_id": 13,
+      "exe_conf": 0.3,
+      "prop_conf": 0.8,
+      "ext_conf": 0.3,
+      "description": "Single comment, high property confidence."
+    },
+    {
+      "comment_id": 38,
+      "issue_id": 14,
+      "exe_conf": 0.5,
+      "prop_conf": 0.8,
+      "ext_conf": 0.9,
+      "description": "Several comments, strong in property and existence."
+    },
+    {
+      "comment_id": 39,
+      "issue_id": 14,
+      "exe_conf": 0.5,
+      "prop_conf": 0.8,
+      "ext_conf": 0.9,
+      "description": "Similar confidence, consistent with issue."
+    },
+    {
+      "comment_id": 40,
+      "issue_id": 14,
+      "exe_conf": 0.5,
+      "prop_conf": 0.8,
+      "ext_conf": 0.9,
+      "description": "Similar confidence, consistent with issue."
+    },
+    {
+      "comment_id": 41,
+      "issue_id": 14,
+      "exe_conf": 0.5,
+      "prop_conf": 0.8,
+      "ext_conf": 0.9,
+      "description": "Similar confidence, consistent with issue."
+    },
+    {
+      "comment_id": 42,
+      "issue_id": 14,
+      "exe_conf": 0.5,
+      "prop_conf": 0.8,
+      "ext_conf": 0.9,
+      "description": "Similar confidence, consistent with issue."
+    },
+    {
+      "comment_id": 43,
+      "issue_id": 15,
+      "exe_conf": 0.6,
+      "prop_conf": 0.5,
+      "ext_conf": 0.6,
+      "description": "Average comment count, balanced confidences."
+    },
+    {
+      "comment_id": 44,
+      "issue_id": 15,
+      "exe_conf": 0.6,
+      "prop_conf": 0.5,
+      "ext_conf": 0.6,
+      "description": "Similar confidence, consistent with issue."
+    },
+    {
+      "comment_id": 45,
+      "issue_id": 15,
+      "exe_conf": 0.6,
+      "prop_conf": 0.5,
+      "ext_conf": 0.6,
+      "description": "Similar confidence, consistent with issue."
+    },
+    {
+      "comment_id": 46,
+      "issue_id": 16,
+      "exe_conf": 0.8,
+      "prop_conf": 0.4,
+      "ext_conf": 0.4,
+      "description": "Few comments, high executive confidence."
+    },
+    {
+      "comment_id": 47,
+      "issue_id": 16,
+      "exe_conf": 0.8,
+      "prop_conf": 0.4,
+      "ext_conf": 0.4,
+      "description": "Similar confidence, consistent with issue."
+    },
+    {
+      "comment_id": 48,
+      "issue_id": 17,
+      "exe_conf": 0.9,
+      "prop_conf": 0.9,
+      "ext_conf": 0.9,
+      "description": "Several comments, high confidence across the board."
+    },
+    {
+      "comment_id": 49,
+      "issue_id": 17,
+      "exe_conf": 0.9,
+      "prop_conf": 0.9,
+      "ext_conf": 0.9,
+      "description": "Similar confidence, consistent with issue."
+    },
+    {
+      "comment_id": 50,
+      "issue_id": 17,
+      "exe_conf": 0.9,
+      "prop_conf": 0.9,
+      "ext_conf": 0.9,
+      "description": "Similar confidence, consistent with issue."
+    },
+    {
+      "comment_id": 51,
+      "issue_id": 18,
+      "exe_conf": 0.7,
+      "prop_conf": 0.7,
+      "ext_conf": 0.5,
+      "description": "Several comments, strong in property."
+    },
+    {
+      "comment_id": 52,
+      "issue_id": 18,
+      "exe_conf": 0.7,
+      "prop_conf": 0.7,
+      "ext_conf": 0.5,
+      "description": "Similar confidence, consistent with issue."
+    },
+    {
+      "comment_id": 53,
+      "issue_id": 18,
+      "exe_conf": 0.7,
+      "prop_conf": 0.7,
+      "ext_conf": 0.5,
+      "description": "Similar confidence, consistent with issue."
+    },
+    {
+      "comment_id": 54,
+      "issue_id": 19,
+      "exe_conf": 0.3,
+      "prop_conf": 0.2,
+      "ext_conf": 0.2,
+      "description": "Few comments, low confidence across the board."
+    },
+    {
+      "comment_id": 55,
+      "issue_id": 19,
+      "exe_conf": 0.3,
+      "prop_conf": 0.2,
+      "ext_conf": 0.2,
+      "description": "Similar confidence, consistent with issue."
+    },
+    {
+      "comment_id": 56,
+      "issue_id": 19,
+      "exe_conf": 0.3,
+      "prop_conf": 0.2,
+      "ext_conf": 0.2,
+      "description": "Similar confidence, consistent with issue."
+    },
+    {
+      "comment_id": 57,
+      "issue_id": 19,
+      "exe_conf": 0.3,
+      "prop_conf": 0.2,
+      "ext_conf": 0.2,
+      "description": "Similar confidence, consistent with issue."
+    },
+    {
+      "comment_id": 58,
+      "issue_id": 20,
+      "exe_conf": 0.7,
+      "prop_conf": 0.5,
+      "ext_conf": 0.4,
+      "description": "Several comments, strong in executive."
+    },
+    {
+      "comment_id": 59,
+      "issue_id": 20,
+      "exe_conf": 0.7,
+      "prop_conf": 0.5,
+      "ext_conf": 0.4,
+      "description": "Similar confidence, consistent with issue."
+    },
+    {
+      "comment_id": 60,
+      "issue_id": 20,
+      "exe_conf": 0.7,
+      "prop_conf": 0.5,
+      "ext_conf": 0.4,
+      "description": "Similar confidence, consistent with issue."
+    },
+    {
+      "comment_id": 61,
+      "issue_id": 20,
+      "exe_conf": 0.7,
+      "prop_conf": 0.5,
+      "ext_conf": 0.4,
+      "description": "Similar confidence, consistent with issue."
+    },
+    {
+      "comment_id": 62,
+      "issue_id": 20,
+      "exe_conf": 0.7,
+      "prop_conf": 0.5,
+      "ext_conf": 0.4,
+      "description": "Similar confidence, consistent with issue."
+    }
+  ]
+}
